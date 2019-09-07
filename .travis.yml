@@ -9,8 +9,6 @@ before_install:
   - chmod +x docker-compose
   - sudo mv docker-compose /usr/local/bin
   - docker network create proxy
-  
-install:
   - docker-compose -f "docker-compose.yml" up -d
 
 script:
