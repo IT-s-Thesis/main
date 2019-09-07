@@ -1,5 +1,8 @@
 language: python
-
+python:
+  - "3.5-dev"
+  - "3.6"
+  - "3.6-dev"
 services:
   - docker
 env:
@@ -10,6 +13,7 @@ before_install:
   - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
   - chmod +x docker-compose
   - sudo mv docker-compose /usr/local/bin
+  - docker network create proxy
   
 install:
   - docker-compose -f "docker-compose.yml" up
