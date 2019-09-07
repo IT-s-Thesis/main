@@ -9,21 +9,22 @@ networks:
 services:
   web:
     image: odoo:12.0
+    
     depends_on:
       - db
     ports:
-      - "8069:8069"
+      - "8069-8071:8069"
     volumes:
       - odoo-web-data:/var/lib/odoo
       - ./config:/etc/odoo
       - ./src:/mnt/extra-addons
     labels:
       - "traefik.enable=true"
-      - "traefik.odoo.frontend.rule=Host:web.localhost"
       - "traefik.docker.network=proxy"
+      - "traefik.odoo.frontend.rule=Host:web.localhost"
       - "traefik.odoo.port=8069"
-      - "traefik.chat.frontend.rule=Host:web.localhost;PathPrefix:/longpolling"
-      - "traefik.chat.port=8072"
+      - "traefik.odoo.backend=odoo"
+      - "traefik.odoo.weight=10"
     networks:
       - internal
       - proxy
@@ -57,7 +58,7 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./traefik/traefik.toml:/traefik.toml
       - ./traefik/acme:/acme
-      
+
 volumes:
   odoo-web-data:
   odoo-db-data:
