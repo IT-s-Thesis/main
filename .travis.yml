@@ -9,7 +9,9 @@ before_install:
   - chmod +x docker-compose
   - sudo mv docker-compose /usr/local/bin
   - docker network create proxy
+  
+install:
   - docker-compose -f "docker-compose.yml" up -d
 
-script:
+after_success:
   - docker-compose run --rm --no-deps  web odoo --test-enable --stop-after-init --workers 0 -u hr 
