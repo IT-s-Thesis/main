@@ -4,3 +4,6 @@
 
 ### Kế hoạch & Tiến độ thực thiện công việc
 [Drive](https://drive.google.com/drive/folders/1DB8k_X-iexqGBJC1rhrZd9UL6Fr8lYA6?usp=sharing)
+
+### Huong dan cai dat, trien khai
+[Drive](https://drive.google.com/drive/folders/1VCfvUNrPceRN29xGwpoczHLwe8pCTTHI?usp=sharing)
