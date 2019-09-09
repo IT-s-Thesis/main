@@ -1,5 +1,7 @@
 # MAIN 
 
+[![Travis (.org) branch](https://img.shields.io/travis/IT-s-Thesis/main/master)](https://travis-ci.org/IT-s-Thesis/main/branches)
+
 ## Tên đề tài: Xây dựng hệ thống bán điện thoại.
 
 ### Kế hoạch & Tiến độ thực thiện công việc
