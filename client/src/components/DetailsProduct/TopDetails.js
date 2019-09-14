@@ -18,10 +18,10 @@ class TopDetails extends Component {
                             <div className="box-details" data-toggle="modal" data-target="#openAccessoriesBox">
                                 <img src="img/detail/open-box.png" alt="" />
                                 <p>Mỏ hộp</p>
-                                <div class="modal fade" id="openAccessoriesBox" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
-                                    <div class="modal-dialog" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-body">
+                                <div className="modal fade" id="openAccessoriesBox" tabIndex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+                                    <div className="modal-dialog" role="document">
+                                        <div className="modal-content">
+                                            <div className="modal-body">
                                                 <img src="img/banner-1.png" alt="" />
                                             </div>
                                         </div>
@@ -33,10 +33,10 @@ class TopDetails extends Component {
                             <div className="box-details" data-toggle="modal" data-target="#openVideoBox">
                                 <img src="img/detail/watch-video.png" alt="" />
                                 <p>Video</p>
-                                <div class="modal fade" id="openVideoBox" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
-                                    <div class="modal-dialog" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-body">
+                                <div className="modal fade" id="openVideoBox" tabIndex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+                                    <div className="modal-dialog" role="document">
+                                        <div className="modal-content">
+                                            <div className="modal-body">
                                                 <img src="https://cdn.fptshop.com.vn/Uploads/Originals/2019/7/25/636996500529518501_UNBOX%20IPHONE%20XS%20MAX.jpg" alt="" />
                                             </div>
                                         </div>
@@ -46,10 +46,10 @@ class TopDetails extends Component {
                             <div className="box-details" data-toggle="modal" data-target="#openFeedback">
                                 <img src="img/detail/feedback.png" alt="" />
                                 <p>Đánh giá</p>
-                                <div class="modal fade" id="openFeedback" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
-                                    <div class="modal-dialog" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-body">
+                                <div className="modal fade" id="openFeedback" tabIndex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+                                    <div className="modal-dialog" role="document">
+                                        <div className="modal-content">
+                                            <div className="modal-body">
                                                 <img src="img/banner-1.png" alt="" />
                                             </div>
                                         </div>
@@ -102,7 +102,7 @@ class TopDetails extends Component {
                             </button> */}
                         </div>
                         <div className="text-center my-2">
-                            Gọi <b className="red">1800-6601</b> để được tư vấn mua hàng (Miễn phí)
+                            Gọi <b className="red">1800-0808</b> để được tư vấn mua hàng (Miễn phí)
           </div>
                     </div>
                     <div className="col-md-3">

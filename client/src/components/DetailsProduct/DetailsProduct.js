@@ -18,9 +18,9 @@ class DetailsProduct extends Component {
             <div className="details-page white-background">
                 <div className="container">
                     <nav className="breadcrumb">
-                        <Link className="breadcrumb-item" href="#">Trang chủ</Link>
-                        <Link className="breadcrumb-item" href="#">Điện thoại</Link>
-                        <Link className="breadcrumb-item" href="#">Iphone</Link>
+                        <Link className="breadcrumb-item" to="/">Trang chủ</Link>
+                        <Link className="breadcrumb-item" to="/">Điện thoại</Link>
+                        <Link className="breadcrumb-item" to="/">Iphone</Link>
                         <span className="breadcrumb-item active">{this.props.details.product_name}</span>
                     </nav>
                 </div>

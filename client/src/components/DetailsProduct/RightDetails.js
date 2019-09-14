@@ -1,11 +1,12 @@
 import React, { Component } from "react";
+import { Link } from 'react-router-dom';
 class RightDetails extends Component {
 
     render() {
         return (
             <div className="col-md-4">
                 <div className="mb-2 pb-2 border-bottom">
-                    <h4 className>Thông số kỹ thuật</h4>
+                    <h4>Thông số kỹ thuật</h4>
                 </div>
                 <div className="specifications-list mb-4">
                     <div className="specifications-item">
@@ -52,34 +53,44 @@ class RightDetails extends Component {
                 <div className="accessories-list">
                     <h4>Phụ kiện dành cho Iphone</h4>
                     <div className="accessory-item">
-                        <img src="img/item/phukien-1.png" alt="" />
+                        <Link to="/"><img src="img/item/phukien-1.png" alt="" /></Link>
                         <div className="accessory-info">
-                            <p className="product-name">Tai nghe Vip</p>
-                            <p className="product-price">150.000đ</p>
+                            <Link to="/">
+                                <p className="product-name">Tai nghe Vip</p>
+                                <p className="product-price">150.000đ</p>
+                            </Link>
                         </div>
                     </div>
                     <div className="accessory-item">
-                        <img src="img/item/phukien-2.png" alt="" />
+                        <Link to="/"><img src="img/item/phukien-1.png" alt="" /></Link>
                         <div className="accessory-info">
-                            <p className="product-name">Tai nghe Vip</p>
-                            <p className="product-price">150.000đ</p>
+                            <Link to="/">
+                                <p className="product-name">Tai nghe Vip</p>
+                                <p className="product-price">150.000đ</p>
+                            </Link>
                         </div>
                     </div>
                     <div className="accessory-item">
-                        <img src="img/item/phukien-3.png" alt="" />
+                        <Link to="/"><img src="img/item/phukien-1.png" alt="" /></Link>
                         <div className="accessory-info">
-                            <p className="product-name">Tai nghe Vip</p>
-                            <p className="product-price">150.000đ</p>
+                            <Link to="/">
+                                <p className="product-name">Tai nghe Vip</p>
+                                <p className="product-price">150.000đ</p>
+                            </Link>
                         </div>
                     </div>
                     <div className="accessory-item">
-                        <img src="img/item/phukien-4.png" alt="" />
+                        <Link to="/"><img src="img/item/phukien-1.png" alt="" /></Link>
                         <div className="accessory-info">
-                            <p className="product-name">Tai nghe Vip</p>
-                            <p className="product-price">150.000đ</p>
+                            <Link to="/">
+                                <p className="product-name">Tai nghe Vip</p>
+                                <p className="product-price">150.000đ</p>
+                            </Link>
                         </div>
                     </div>
+
                 </div>
+
             </div>
         );
 

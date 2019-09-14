@@ -37,15 +37,15 @@ class CategoryFilter extends Component {
                 <div className="choose-price mb-3">
                     <span className="font-weight-bold">Chọn mức giá:</span>
                     <div className="price-list">
-                        <Link>Dưới 2 triệu</Link>
-                        <Link>Từ 2 - 4 triệu</Link>
-                        <Link>Từ 4 - 8 triệu</Link>
-                        <Link>Từ 8 - 15 triệu</Link>
-                        <Link>Trên 15 triệu</Link>
+                        <Link to="/">Dưới 2 triệu</Link>
+                        <Link to="/">Từ 2 - 4 triệu</Link>
+                        <Link to="/">Từ 4 - 8 triệu</Link>
+                        <Link to="/">Từ 8 - 15 triệu</Link>
+                        <Link to="/">Trên 15 triệu</Link>
                     </div>
                     <div className="filter">
-                        <select className="form-control" name id>
-                            <option style={{ display: 'none' }} selected>Sắp xếp theo</option>
+                        <select className="form-control">
+                            <option style={{ display: 'none' }} defaultValue>Sắp xếp theo</option>
                             <option>Mới nhất</option>
                             <option>Bán chạy</option>
                             <option>Giá cao đến thấp</option>

@@ -11,7 +11,7 @@ class CategoryProductItem extends Component {
         return (
             <div className="five-item px-0">
                 <div className="product-item border-bottom border-right">
-                    <Link onClick={this.handleClick}><img className="product-img" src={product_img} alt="" />
+                    <Link to="/" onClick={this.handleClick}><img className="product-img" src={product_img} alt="" />
                         <div className="product-info p-2">
                             <p className="product-name">{product_name}</p>
                             <p className="product-price">{product_price}đ</p>

@@ -103,19 +103,111 @@ class LeftDetails extends Component {
                     <h4 className=" pb-3 mt-3">Đánh giá &amp; Nhận xét Iphone XS</h4>
                     <div className="row border p-2">
                         <div className="col-md-6 border-right d-flex flex-column justify-content-center align-items-center">
-                            <p>3,4/5</p>
-                            <p><i className="fas fa-star" />
-                                <i className="fas fa-star" />
-                                <i className="fas fa-star" />
-                                <i className="fas fa-star" />
-                                <i className="fas fa-star-half-alt" />
+                            <p>4,5/5</p>
+                            <p><i className="fas fa-star orange" />
+                                <i className="fas fa-star orange" />
+                                <i className="fas fa-star orange" />
+                                <i className="fas fa-star orange" />
+                                <i className="fas fa-star-half-alt orange" />
                             </p><p>69 đánh giá &amp; nhận xét</p>
                         </div>
                         <div className="col-md-6 d-flex flex-column justify-content-center align-items-center">
-                            <button type="button" className="btn btn-primary">Gửi đánh giá của bạn</button>
+                            <button data-toggle="collapse" className="btn btn-danger" data-target="#feed-back">Gửi đánh giá của bạn</button>
+                        </div>
+                    </div>
+                    <div id="feed-back" class="collapse">
+                        <h5 className=" pb-3 my-3 border-bottom">Gửi nhận xét của bạn</h5>
+                        <p><b>Bạn chấm sản phẩm này bao nhiêu sao?</b></p>
+                        <p>
+                            <i className="fas fa-star orange" />
+                            <i className="fas fa-star orange" />
+                            <i className="fas fa-star orange" />
+                            <i className="fas fa-star orange" />
+                            <i className="fas fa-star orange" />
+                        </p>
+                        <div class="form-group user-name">
+                            <input type="text" class="form-control" required placeholder="Họ tên" />
+                        </div>
+                        <div class="form-group user-email">
+                            <input type="text" class="form-control" placeholder="Email (Không bắt buộc)" />
+                        </div>
+                        <div class="form-group">
+                            <textarea class="form-control" rows="3"></textarea>
+                        </div>
+                        <div className="float-right">
+                            <button type="button" class="btn btn-light mb-3">Hủy</button>
+                            <button type="button" class="btn btn-danger mb-3 ml-2">Gửi</button>
+                        </div>
+                    </div>
+
+                    <div className="questions-list py-3 border-top">
+                        <div className="question-item mb-2">
+                            <p>
+                                <b>Lê Mỹ Hằng</b>
+                                <span className="ml-2"><i className="fas fa-star orange" />
+                                    <i className="fas fa-star orange" />
+                                    <i className="fas fa-star orange" />
+                                    <i className="fas fa-star orange" />
+                                    <i className="fas fa-star-half-alt orange" />
+                                </span>
+                            </p>
+                            <p>Theo mình sản phẩm này rất tốt đó nha các bạn mặc dù mình chưa xài</p>
+                            <p className="text-muted">1 năm trước</p>
+                        </div>
+                        <div className="question-item mb-2">
+                            <p>
+                                <b>Lê Mỹ Hằng</b>
+                                <span className="ml-2"><i className="fas fa-star orange" />
+                                    <i className="fas fa-star orange" />
+                                    <i className="fas fa-star orange" />
+                                    <i className="fas fa-star orange" />
+                                    <i className="fas fa-star-half-alt orange" />
+                                </span>
+                            </p>
+                            <p>Điện thoại này lạ quá</p>
+                            <p className="text-muted">1 năm trước</p>
+                        </div>
+                    </div>
+
+                </div>
+                <div className="questions">
+                    <h4 className=" pb-3 my-3 border-bottom">Hỏi đáp về phone XS</h4>
+                    <div class="form-group user-name">
+                        <input type="text" class="form-control" required placeholder="Họ tên" />
+                    </div>
+                    <div class="form-group user-email">
+                        <input type="text" class="form-control" placeholder="Email (Không bắt buộc)" />
+                    </div>
+                    <div class="form-group">
+                        <textarea class="form-control" rows="3"></textarea>
+                    </div>
+                    <div className="float-right">
+                        <button type="button" class="btn btn-danger mb-3">Gửi câu hỏi</button>
+                    </div>
+                    <div className="questions-list py-3 border-top">
+                        <div className="question-item mb-2">
+                            <p><b>Lê Mỹ Hằng</b></p>
+                            <p>Cho em xin 1 cái miễn phí được không ạ?</p>
+                            <p className="text-muted">1 năm trước</p>
+                            <div className="reply ml-4 mt-2 p-3">
+                                <p><b>Lê Thị Mỹ Hậu</b> <span type="button" class="btn btn-warning font-11 ml-2 p-1">Quản trị viên</span> </p>
+                                <p>Khùng hả bạn?</p>
+                                <p className="text-muted">1 tháng trước</p>
+                            </div>
+                        </div>
+                        <div className="question-item mb-2">
+                            <p><b>Lê Mỹ Hằng</b></p>
+                            <p>Cho em xin 1 cái đi mà</p>
+                            <p className="text-muted">1 tháng trước</p>
+                            <div className="reply ml-4 mt-2 p-3">
+                                <p><b>Lê Thị Mỹ Hậu</b> <span type="button" class="btn btn-warning font-11 ml-2 p-1">Quản trị viên</span> </p>
+                                <p>Không nha</p>
+                                <p className="text-muted">1 giờ trước</p>
+                            </div>
                         </div>
                     </div>
                 </div>
+
             </div>
         );
 
