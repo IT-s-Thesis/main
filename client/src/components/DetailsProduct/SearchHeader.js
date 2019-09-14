@@ -6,13 +6,13 @@ class SearchHeader extends Component {
 
         return (
             <div className="col-md-5 col-sm-12 col-10 left-header">
-            <div className="logo pt-2">
+            <div className="logo">
                 <Link to="/">
                 <img src="img/logo.jpg" alt="" />
                 </Link>
             </div>
             <div className="search-form">
-                <input type="text" className="form-control" placeholder="Bạn tìm gì..." aria-describedby="helpId" />
+                <input type="text" name="" id="" className="form-control" placeholder="Bạn tìm gì..."  />
                 <Link to="/"><i className="fa fa-search" aria-hidden="true" /></Link>
             </div>
         </div>

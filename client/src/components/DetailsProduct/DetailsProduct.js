@@ -3,7 +3,8 @@ import TopDetails from "./TopDetails";
 import LeftDetails from "./LeftDetails";
 import RightDetails from "./RightDetails";
 import { connect } from 'react-redux';
-import { actFetchDetailsProduct, actFetchDetailsProductRequest } from '../../actions/index';
+import { Link } from 'react-router-dom';
+import { actFetchDetailsProductRequest } from '../../actions/index';
 class DetailsProduct extends Component {
     componentDidMount() {
         const { match } = this.props;
@@ -17,9 +18,9 @@ class DetailsProduct extends Component {
             <div className="details-page white-background">
                 <div className="container">
                     <nav className="breadcrumb">
-                        <a className="breadcrumb-item" href="#">Trang chủ</a>
-                        <a className="breadcrumb-item" href="#">Điện thoại</a>
-                        <a className="breadcrumb-item" href="#">Iphone</a>
+                        <Link className="breadcrumb-item" href="#">Trang chủ</Link>
+                        <Link className="breadcrumb-item" href="#">Điện thoại</Link>
+                        <Link className="breadcrumb-item" href="#">Iphone</Link>
                         <span className="breadcrumb-item active">{this.props.details.product_name}</span>
                     </nav>
                 </div>

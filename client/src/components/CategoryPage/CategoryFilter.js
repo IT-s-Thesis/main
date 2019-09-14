@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from 'react-redux';
 import { actFetchProductsRequest, actFetchCategoriesRequest, actFilterCategory } from '../../actions/index';
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import {  Link } from "react-router-dom";
 class CategoryFilter extends Component {
     componentDidMount() {
         this.props.fetchAllProducts();
@@ -11,7 +11,7 @@ class CategoryFilter extends Component {
        this.props.onFilterCategory(cate);
     }
     render() {
-        const { products, categories, filters } = this.props;
+        const { categories } = this.props;
         
         var categoriesList = "";
         if (categories) {
@@ -20,7 +20,7 @@ class CategoryFilter extends Component {
                     <Link 
                     to={`category-${category.category_name}` }
                         onClick= {() => this.onFilterCategory(category.id)}
-                    key={index} >
+                    key={index} className="border" >
                         <img src={category.category_image} alt="" />
                     </Link>
                 )
@@ -37,11 +37,11 @@ class CategoryFilter extends Component {
                 <div className="choose-price mb-3">
                     <span className="font-weight-bold">Chọn mức giá:</span>
                     <div className="price-list">
-                        <a href>Dưới 2 triệu</a>
-                        <a href>Từ 2 - 4 triệu</a>
-                        <a href>Từ 4 - 8 triệu</a>
-                        <a href>Từ 8 - 15 triệu</a>
-                        <a href>Trên 15 triệu</a>
+                        <Link>Dưới 2 triệu</Link>
+                        <Link>Từ 2 - 4 triệu</Link>
+                        <Link>Từ 4 - 8 triệu</Link>
+                        <Link>Từ 8 - 15 triệu</Link>
+                        <Link>Trên 15 triệu</Link>
                     </div>
                     <div className="filter">
                         <select className="form-control" name id>

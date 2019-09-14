@@ -1,17 +1,16 @@
 import React, { Component } from "react";
 import CategoryProductItem from "./CategoryProductItem";
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
-import { actFetchProductsRequest, actFetchCategoriesRequest } from '../../actions/index';
+// import { Link } from 'react-router-dom';
+// import { actFetchProductsRequest, actFetchCategoriesRequest } from '../../actions/index';
 class CategoryProductList extends Component {
     render() {
         const { products, filters } = this.props;
         var productsList = "";
-        console.log(this.props.match);
         if (products) {
             if (filters && filters !== "All") {
                 productsList = products.map((product, index) => {
-                    return (product.category_id == filters) ? 
+                    return (product.category_id.toString() === filters) ? 
                             (<CategoryProductItem key={index} product={product} />) 
                             : "";
                 });

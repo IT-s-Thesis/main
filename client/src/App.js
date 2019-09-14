@@ -16,7 +16,7 @@ class App extends Component {
      <Header />
       <Switch>
       <Route path="/" exact component={Home} />
-      <Route path="/category" component={Category} />
+      <Route path="/category" match component={Category} />
       <Route path="/details-:id" match component={DetailsProduct} />
       <Route path="/cart" match component={CartPage} />
       </Switch>

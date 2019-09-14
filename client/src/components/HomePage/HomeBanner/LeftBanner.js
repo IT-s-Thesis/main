@@ -33,7 +33,7 @@ class LeftBanner extends Component {
                         <span className="sr-only">Next</span>
                     </a>
                 </div>
-                <div className="select-banner text-center carousel-indicators d-none d-sm-flex">
+                <div className="select-banner text-center carousel-indicators d-none d-md-flex">
                     <div data-target="#main-banner" data-slide-to={0} 
                     // className="active"
                     > Đặt trước Galaxy A50s
