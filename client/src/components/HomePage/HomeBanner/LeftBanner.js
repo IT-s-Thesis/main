@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-
+import { Link } from 'react-router-dom';
 class LeftBanner extends Component {
 
     render() {
@@ -9,19 +9,19 @@ class LeftBanner extends Component {
                 <div id="main-banner" className="carousel slide" data-ride="carousel">
                     <div className="carousel-inner" role="listbox">
                         <div className="carousel-item active">
-                            <a href><img src="img/banner-1.png" alt="" /></a>
+                            <Link to="/"><img src="img/banner-1.png" alt="" /></Link>
                         </div>
                         <div className="carousel-item">
-                            <a href><img src="img/banner-2.png" alt="" /></a>
+                            <Link to="/" href><img src="img/banner-2.png" alt="" /></Link>
                         </div>
                         <div className="carousel-item">
-                            <a href><img src="img/banner-3.png" alt="" /></a>
+                            <Link to=""><img src="img/banner-3.png" alt="" /></Link>
                         </div>
                         <div className="carousel-item">
-                            <a href><img src="img/banner-4.png" alt="" /></a>
+                            <Link to=""><img src="img/banner-4.png" alt="" /></Link>
                         </div>
                         <div className="carousel-item">
-                            <a href><img src="img/banner-5.png" alt="" /></a>
+                            <Link to=""><img src="img/banner-5.png" alt="" /></Link>
                         </div>
                     </div>
                     <a className="carousel-control-prev" href="#main-banner" role="button" data-slide="prev">
@@ -33,8 +33,10 @@ class LeftBanner extends Component {
                         <span className="sr-only">Next</span>
                     </a>
                 </div>
-                <div className="select-banner text-center carousel-indicators">
-                    <div data-target="#main-banner" data-slide-to={0} className="active"> Đặt trước Galaxy A50s
+                <div className="select-banner text-center carousel-indicators d-none d-sm-flex">
+                    <div data-target="#main-banner" data-slide-to={0} 
+                    // className="active"
+                    > Đặt trước Galaxy A50s
                     </div>
                     <div data-target="#main-banner" data-slide-to={1}>Sắm OPPO trả góp 0%</div>
                     <div data-target="#main-banner" data-slide-to={2}>Iphone Giảm đến 1,5 triệu</div>

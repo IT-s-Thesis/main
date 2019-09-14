@@ -9,10 +9,7 @@ class Home extends Component {
             <main>
                 <section className="banner">
                     <HomeBanner />
-                    <div className="form-check">
-                        <input type="checkbox" className="form-check-input" name="" id="" value="checkedValue" checked/>
                 
-                    </div>
                 </section>
                 <section className="product-list">
                     <HomeProduct />

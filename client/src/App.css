@@ -19,7 +19,7 @@ body {
 }
 /* CSS Header */
 header {
-    background-color: #1bbb61;
+    background-color: #e20b0bb3;
 }
 .left-header, .search-form {
     display: flex;
@@ -47,9 +47,9 @@ header {
 .search-form i {
     position: absolute;
     color: #bdc3c7;
-    font-size: 1.4rem;
-    top:16px;
-    right:6px;
+    font-size: 1.3rem;
+    top:22px;
+    right:8px;
 }
 
 .right-header {
@@ -474,7 +474,7 @@ footer {
 
 @media only screen and (max-width: 1200px) and (min-width: 992px) { 
 .nav-item {
-    padding: 10px 0;
+    padding: 10px;
 }
 .nav-item .nav-link, .hotline p, .cart p {
     font-size: 12px;
@@ -614,6 +614,28 @@ footer {
 }
 
 @media only screen and (max-width: 576px) {
+header, .left-header, .search-form {
+    background: #000;
+}    
+header .row {
+    position: relative;
+}
+header .navbar {
+    border: none !important;
+    outline: none;
+}
+.navbar-light .navbar-toggler {
+    border: none;
+    outline: none;
+}
+.navbar-toggler-icon {
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255,255,255, 1)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E") !important;
+    margin-top: 15px;
+    width: 80px;
+} 
+.left-header {
+    position: absolute;
+}
 .right-header {
     display: block;
     padding: 0;
@@ -625,6 +647,9 @@ nav {
 nav button {
     width: 100%;
     text-align: end;
+}
+header nav .nav-item {
+    border-bottom: 1px dashed #fff;
 }
 nav button span {
     color: #fff;

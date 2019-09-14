@@ -1,19 +1,19 @@
 import React, { Component } from "react";
-import { NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 class SearchHeader extends Component {
 
     render() {
 
         return (
-            <div className="col-md-5 col-sm-12 left-header">
+            <div className="col-md-5 col-sm-12 col-10 left-header">
             <div className="logo">
-                <NavLink to="/">
+                <Link to="/">
                 <img src="img/logo.jpg" alt="" />
-                </NavLink>
+                </Link>
             </div>
             <div className="search-form">
                 <input type="text" name id className="form-control" placeholder="Bạn tìm gì..." aria-describedby="helpId" />
-                <i className="fa fa-search" aria-hidden="true" />
+                <Link><i className="fa fa-search" aria-hidden="true" /></Link>
             </div>
         </div>
         );

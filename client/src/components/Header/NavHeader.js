@@ -25,29 +25,24 @@ class NavHeader extends Component {
                             </li>
                             <li className="nav-item">
                                 <NavLink to="" className="nav-link">
-                                    <i className="fas fa-mobile-alt" />
+                                <i class="fas fa-headphones-alt"></i>
                                     <p>Phụ kiện</p>
                                 </NavLink>
                             </li>
                             <li className="nav-item">
                                 <NavLink to="" className="nav-link">
-                                    <i className="fas fa-mobile-alt" />
-                                    <p>Sửa chữa</p>
+                                <i class="far fa-newspaper"></i>
+                                    <p>Tin công nghệ</p>
                                 </NavLink>
                             </li>
-                            <li className="nav-item">
-                                <NavLink to="" className="nav-link">
-                                    <i className="fas fa-mobile-alt" />
-                                    <p>Trả góp</p>
-                                </NavLink>
-                            </li>
+                           
                         </ul>
                     </div>
                 </nav>
                 <div className="hotline text-center">
                     <NavLink to="" className="nav-link">
                         <p> <i className="fas fa-phone" /></p>
-                        <p>1080</p>
+                        <p>1080 0808</p>
                     </NavLink>
                 </div>
                 <div className="cart text-center">
