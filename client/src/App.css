@@ -411,6 +411,7 @@ footer .copy-right p {
 }
 .accessory-item img {
     width: 90%;
+    height: 100%;
 }
 .questions .user-name, #feed-back .user-name {
     width: 33%;
@@ -517,6 +518,9 @@ footer .copy-right p {
 .cart-item .product-info, .total-price .label {
     width: 40%;
 }
+.customer-info .customer-name {
+    margin-right: 5px;
+}
 .customer-info .customer-name, .customer-info .customer-phone {
     width: 49%;
     display: inline-block;
@@ -539,6 +543,51 @@ footer .copy-right p {
     display: inline-block;
     margin: 10px 10px 0 0;
 }
+
+
+/* Accessories Page */
+.accessoriesType-item {
+    border: 1px solid #f0f0f0;
+    padding-right: 14px !important;
+}
+.accessoriesType-item img {
+    width: 60%;
+}
+
+
+
+/* CSS News Page */
+.newsType-list a{
+    padding: 10px 20px;
+    font-size: 18px;
+    font-weight: 600;
+}
+.newsType-list a.activ   {
+    background: #d9232e;
+    color: #fff;
+}
+.news-Item .news-Image {
+    width: 30%;
+    margin-right: 16px;
+}
+.news-Item .news-Info {
+    width: 65%;
+}
+.mostViews-item {
+    margin-bottom: 18px;
+}
+.mostView-rank {
+    font-size: 20px;
+    border-radius: 50%;
+    background: #ababab;
+    width: 30%;
+    text-align: center;
+    line-height: 45px;
+    margin-right: 10px;
+    height: 70%;
+    color: #fff;
+}
+
 
 @media only screen and (min-width: 1200px) {
 .nav-item .nav-link, .hotline p, .cart p {
@@ -717,6 +766,12 @@ footer .copy-right p {
     width: 300px;
     margin-left: -10px !important;
 }
+.accessoriesType-list  {
+    flex-wrap: wrap;
+}
+.accessoriesType-item {
+    width: 25%;
+}
 }
 
 
@@ -840,8 +895,18 @@ nav button span {
     width: 300px;
     margin-left: -10px !important;
 }
+.accessoriesType-list  {
+    flex-wrap: wrap;
+}
+.accessoriesType-item {
+    width: 25%;
+}
 body {
     overflow-x: hidden;
 }
 
 }
+
+/* .text-uppercase.active {
+    background: red;
+} */

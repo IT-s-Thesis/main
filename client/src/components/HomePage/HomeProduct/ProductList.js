@@ -54,6 +54,14 @@ class ProductList extends Component {
                         <div className="product-info p-2">
                             <Link to="/">
                                 <p className="product-name">IPhone X 64GB</p>
+                                <p>
+                                    <i className="fas fa-star orange font-11"></i>
+                                    <i className="fas fa-star orange font-11"></i>
+                                    <i className="fas fa-star orange font-11"></i>
+                                    <i className="fas fa-star orange font-11"></i>
+                                    <i className="fas fa-star orange font-11"></i>
+                                    <span className="text-muted font-11"> (10 đánh giá)</span>
+                                </p>
                                 <p className="product-price">14.990.000đ</p>
                             </Link>
                         </div>
