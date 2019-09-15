@@ -13,7 +13,7 @@ class SearchHeader extends Component {
             </div>
             <div className="search-form">
                 <input type="text" className="form-control" placeholder="Bạn tìm gì..." aria-describedby="helpId" />
-                <Link to="/"><i className="fa fa-search" aria-hidden="true" /></Link>
+                <Link to="/search"><i className="fa fa-search" aria-hidden="true" /></Link>
             </div>
         </div>
         );

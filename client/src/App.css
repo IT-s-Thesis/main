@@ -589,6 +589,29 @@ footer .copy-right p {
 }
 
 
+
+/* */
+.searchType-list a{
+    margin-right: 20px;
+    font-size: 18x;
+}
+.searchType-list a.active {
+    color: #d0011b;
+    border-bottom: 3px solid #d0011b;
+    font-weight: 600;
+}
+ .product-item:hover {
+    box-shadow: 1px 2px 7px 0 rgba(0, 0, 0, 0.21);
+    transition: 0.5s;
+}
+.search-page .products-list {
+    flex-wrap: wrap;
+}
+.search-page .product-item {
+    width: 25%;
+}
+
+
 @media only screen and (min-width: 1200px) {
 .nav-item .nav-link, .hotline p, .cart p {
     padding: 0 6px !important;
