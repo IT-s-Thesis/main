@@ -7,7 +7,7 @@ class Category extends Component {
     render() {
         return (
             <Router>
-                <div className="category-page white-background">
+                <div className="category-page">
                     <div className="container">
                         <CategoryFilter />
                         <Switch>

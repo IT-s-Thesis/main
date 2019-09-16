@@ -1,26 +1,26 @@
 import React, { Component } from "react";
 import { connect } from 'react-redux';
 import { actFetchProductsRequest, actFetchCategoriesRequest, actFilterCategory } from '../../actions/index';
-import {  Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 class CategoryFilter extends Component {
     componentDidMount() {
         this.props.fetchAllProducts();
         this.props.fetchAllCategories();
     }
     onFilterCategory = (cate) => {
-       this.props.onFilterCategory(cate);
+        this.props.onFilterCategory(cate);
     }
     render() {
         const { categories } = this.props;
-        
+
         var categoriesList = "";
         if (categories) {
             categoriesList = categories.map((category, index) => {
                 return (
-                    <Link 
-                    to={`category-${category.category_name}` }
-                        onClick= {() => this.onFilterCategory(category.id)}
-                    key={index} className="border" >
+                    <Link
+                        to={`category-${category.category_name}`}
+                        onClick={() => this.onFilterCategory(category.id)}
+                        key={index} className="border" >
                         <img src={category.category_image} alt="" />
                     </Link>
                 )
@@ -28,9 +28,9 @@ class CategoryFilter extends Component {
             });
         }
         return (
-            
+
             <React.Fragment>
-                
+
                 <div className="category-list d-flex py-3">
                     {categoriesList}
                 </div>
@@ -52,6 +52,10 @@ class CategoryFilter extends Component {
                             <option>Giá thấp đến cao</option>
                         </select>
                     </div>
+
+                </div>
+                <div>
+                    <h5 className="white-background border-right border-top border-left p-3 m-0">Tất cả điện thoại</h5>
                 </div>
             </React.Fragment>
         );

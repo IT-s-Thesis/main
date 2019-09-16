@@ -115,6 +115,9 @@ nav  {
     height: 60px;
     background: #fff;
 }
+.select-banner.carousel-indicators {
+    bottom: unset;
+}
 .select-banner .active {
     border-bottom: 2px solid #1bbb61;
 }
@@ -306,7 +309,7 @@ footer .copy-right p {
     border: none;
 }
 .breadcrumb-item {
-    color: #39b54a;
+    color: #259aca;
     font-weight: 600;
 }
 .details-product .product-name {
@@ -568,7 +571,7 @@ footer .copy-right p {
 }
 .news-Item .news-Image {
     width: 30%;
-    margin-right: 16px;
+    margin: 0 16px;
 }
 .news-Item .news-Info {
     width: 65%;
@@ -579,13 +582,22 @@ footer .copy-right p {
 .mostView-rank {
     font-size: 20px;
     border-radius: 50%;
-    background: #ababab;
-    width: 30%;
+    background: #ccc;
+    width: 25%;
     text-align: center;
-    line-height: 45px;
+    line-height: 40px;
     margin-right: 10px;
     height: 70%;
     color: #fff;
+}
+.mostViews-item:first-child .mostView-rank {
+    background: #f53423;
+}
+.mostViews-item:nth-child(2) .mostView-rank {
+    background: #f5a623;
+}
+.mostViews-item:nth-child(3) .mostView-rank{
+    background: #ababab;
 }
 
 

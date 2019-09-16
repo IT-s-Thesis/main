@@ -5,7 +5,7 @@ class AccessoriesPage extends Component {
     render() {
 
         return (
-            <div className="white-background">
+            <div className="">
                 <div className="container py-3">
                     <div className="row my-3 white-background">
                         <div className="accessoriesType-list d-flex">
@@ -42,6 +42,9 @@ class AccessoriesPage extends Component {
                                 <p>Chống nước</p>
                             </Link>
                         </div>
+                    </div>
+                    <div className="row w">
+                        <h5 className="white-background border-right border-top border-left p-3 m-0 w-100">Tất cả phụ kiện</h5>
                     </div>
                     <div className="row white-background border-left border-top">
                         <div className="product-item five-item border-bottom border-right">

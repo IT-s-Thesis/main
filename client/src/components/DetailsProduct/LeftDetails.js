@@ -115,7 +115,7 @@ class LeftDetails extends Component {
                             <button data-toggle="collapse" className="btn btn-danger" data-target="#feed-back">Gửi đánh giá của bạn</button>
                         </div>
                     </div>
-                    <div id="feed-back" class="collapse">
+                    <div id="feed-back" className="collapse">
                         <h5 className=" pb-3 my-3 border-bottom">Gửi nhận xét của bạn</h5>
                         <p><b>Bạn chấm sản phẩm này bao nhiêu sao?</b></p>
                         <p>
@@ -125,18 +125,18 @@ class LeftDetails extends Component {
                             <i className="fas fa-star orange" />
                             <i className="fas fa-star orange" />
                         </p>
-                        <div class="form-group user-name">
-                            <input type="text" class="form-control" required placeholder="Họ tên" />
+                        <div className="form-group user-name">
+                            <input type="text" className="form-control" required placeholder="Họ tên" />
                         </div>
-                        <div class="form-group user-email">
-                            <input type="text" class="form-control" placeholder="Email (Không bắt buộc)" />
+                        <div className="form-group user-email">
+                            <input type="text" className="form-control" placeholder="Email (Không bắt buộc)" />
                         </div>
-                        <div class="form-group">
-                            <textarea class="form-control" rows="3"></textarea>
+                        <div className="form-group">
+                            <textarea className="form-control" rows="3"></textarea>
                         </div>
                         <div className="float-right">
-                            <button type="button" class="btn btn-light mb-3">Hủy</button>
-                            <button type="button" class="btn btn-danger mb-3 ml-2">Gửi</button>
+                            <button type="button" className="btn btn-light mb-3">Hủy</button>
+                            <button type="button" className="btn btn-danger mb-3 ml-2">Gửi</button>
                         </div>
                     </div>
 
@@ -172,17 +172,17 @@ class LeftDetails extends Component {
                 </div>
                 <div className="questions">
                     <h4 className=" pb-3 my-3 border-bottom">Hỏi đáp về phone XS</h4>
-                    <div class="form-group user-name">
-                        <input type="text" class="form-control" required placeholder="Họ tên" />
+                    <div className="form-group user-name">
+                        <input type="text" className="form-control" required placeholder="Họ tên" />
                     </div>
-                    <div class="form-group user-email">
-                        <input type="text" class="form-control" placeholder="Email (Không bắt buộc)" />
+                    <div className="form-group user-email">
+                        <input type="text" className="form-control" placeholder="Email (Không bắt buộc)" />
                     </div>
-                    <div class="form-group">
-                        <textarea class="form-control" rows="3"></textarea>
+                    <div className="form-group">
+                        <textarea className="form-control" rows="3"></textarea>
                     </div>
                     <div className="float-right">
-                        <button type="button" class="btn btn-danger mb-3">Gửi câu hỏi</button>
+                        <button type="button" className="btn btn-danger mb-3">Gửi câu hỏi</button>
                     </div>
                     <div className="questions-list py-3 border-top">
                         <div className="question-item mb-2">
@@ -190,7 +190,7 @@ class LeftDetails extends Component {
                             <p>Cho em xin 1 cái miễn phí được không ạ?</p>
                             <p className="text-muted">1 năm trước</p>
                             <div className="reply ml-4 mt-2 p-3">
-                                <p><b>Lê Thị Mỹ Hậu</b> <span type="button" class="btn btn-warning font-11 ml-2 p-1">Quản trị viên</span> </p>
+                                <p><b>Lê Thị Mỹ Hậu</b> <span type="button" className="btn btn-warning font-11 ml-2 p-1">Quản trị viên</span> </p>
                                 <p>Khùng hả bạn?</p>
                                 <p className="text-muted">1 tháng trước</p>
                             </div>
@@ -200,7 +200,7 @@ class LeftDetails extends Component {
                             <p>Cho em xin 1 cái đi mà</p>
                             <p className="text-muted">1 tháng trước</p>
                             <div className="reply ml-4 mt-2 p-3">
-                                <p><b>Lê Thị Mỹ Hậu</b> <span type="button" class="btn btn-warning font-11 ml-2 p-1">Quản trị viên</span> </p>
+                                <p><b>Lê Thị Mỹ Hậu</b> <span type="button" className="btn btn-warning font-11 ml-2 p-1">Quản trị viên</span> </p>
                                 <p>Không nha</p>
                                 <p className="text-muted">1 giờ trước</p>
                             </div>

@@ -24,7 +24,8 @@ class CategoryProductList extends Component {
             }
         }
         return (
-            <div className="row product-category-list border-top border-left my-3">
+            <div className="row product-category-list white-background border-top border-left mb-3 mx-0">
+                
                 {productsList}
             </div>
         );

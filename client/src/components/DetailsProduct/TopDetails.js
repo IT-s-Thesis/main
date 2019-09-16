@@ -85,7 +85,6 @@ class TopDetails extends Component {
                         <div className="details-promotion mt-3">
                             <p className="text-uppercase font-weight-bold">Khuyến mãi</p>
                             <div className="promotion-list">
-                                <p><i className="fas fa-check-circle green" /> Giảm 100.000đ với Khách Hàng Thân Thiết</p>
                                 <p><i className="fas fa-check-circle green" /> Tặng bộ tai nghe, cáp, sạc trị giá 450.000đ</p>
                                 <p><i className="fas fa-check-circle green" /> Tặng dán màn hình, ốp lưng trị giá 200.000đ</p>
                                 <p><i className="fas fa-check-circle green" /> Giảm ngay 350.000đ (đã trừ vào giá)</p>
@@ -108,10 +107,18 @@ class TopDetails extends Component {
                     <div className="col-md-3">
                         <div className="green text-uppercase font-weight-bold mb-3">Thông tin sản phẩm</div>
                         <div className="details-info">
-                            <p><i className="fas fa-box-open green" /> Phụ kiện đi kèm: <span>Sạc, Sách hướng dẫn, Cáp, Cây
-                lấy sim, Ốp lưng</span></p>
-                            <p><i className="fas fa-award green" /> Bảo hành 12 tháng chính hãng</p>
-                            <p><i className="fas fa-truck green" /> Giao hàng miễn phí toàn quốc trong 60 phút</p>
+                            <p className="d-flex ">
+                                <i className="fas fa-box-open green pt-2 mr-2" />
+                                <span> Phụ kiện đi kèm: Sạc, Sách hướng dẫn, Cáp, Cây lấy sim, Ốp lưng</span>
+                            </p>
+                            <p className="d-flex">
+                                <i className="fas fa-award green pt-2 mr-2" />
+                               <span> Bảo hành 12 tháng chính hãng</span>
+                                </p>
+                            <p className="d-flex">
+                                <i className="fas fa-truck green pt-2 mr-2" /> 
+                                <span>Giao hàng miễn phí toàn quốc trong 60 phút</span>
+                                </p>
                         </div>
                     </div>
                 </div>
