@@ -72,31 +72,31 @@ class NewsPage extends Component {
                                     <div className="mostView-rank">
                                         1
                                         </div>
-                                    <p>iOS 13 chính thức ra mắt ngày 19/9, cần chuẩn bị gì?</p>
+                                    <Link to="/">iOS 13 chính thức ra mắt ngày 19/9, cần chuẩn bị gì?</Link>
                                 </div>
                                 <div className="mostViews-item d-flex">
                                     <div className="mostView-rank">
                                         2
                                         </div>
-                                    <p>iOS 13 chính thức ra mắt ngày 19/9, cần chuẩn bị gì?</p>
+                                    <Link to="/">iOS 13 chính thức ra mắt ngày 19/9, cần chuẩn bị gì?</Link>
                                 </div>
                                 <div className="mostViews-item d-flex">
                                     <div className="mostView-rank">
                                         3
                                         </div>
-                                    <p>iOS 13 chính thức ra mắt ngày 19/9, cần chuẩn bị gì?</p>
+                                    <Link to="/">iOS 13 chính thức ra mắt ngày 19/9, cần chuẩn bị gì?</Link>
                                 </div>
                                 <div className="mostViews-item d-flex">
                                     <div className="mostView-rank">
                                         4
                                         </div>
-                                    <p>iOS 13 chính thức ra mắt ngày 19/9, cần chuẩn bị gì?</p>
+                                    <Link to="/">iOS 13 chính thức ra mắt ngày 19/9, cần chuẩn bị gì?</Link>
                                 </div>
                                 <div className="mostViews-item d-flex">
                                     <div className="mostView-rank">
                                         5
                                         </div>
-                                    <p>iOS 13 chính thức ra mắt ngày 19/9, cần chuẩn bị gì?</p>
+                                    <Link to="/">iOS 13 chính thức ra mắt ngày 19/9, cần chuẩn bị gì?</Link>
                                 </div>
                             </div>
                         </div>

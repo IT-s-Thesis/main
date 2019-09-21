@@ -6,7 +6,9 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { actFetchDetailsProductRequest } from '../../actions/index';
 class DetailsProduct extends Component {
+
     componentDidMount() {
+        window.scrollTo(0,0);
         const { match } = this.props;
         if (match) {
             const id = parseInt(match.params.id,10);

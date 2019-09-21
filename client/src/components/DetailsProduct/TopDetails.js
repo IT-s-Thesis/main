@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from 'react-redux';
-
+import { Link } from 'react-router-dom';
 class TopDetails extends Component {
 
 
@@ -91,10 +91,12 @@ class TopDetails extends Component {
                             </div>
                         </div>
                         <div className="product-buy text-center mt-3">
-                            <button type="button" className="btn btn-buy">
-                                <p className="text-uppercase font-weight-bold">Mua ngay</p>
-                                <p>Giao hàng miễn phí</p>
-                            </button>
+                            <Link to="/cart">
+                                <button type="button" className="btn btn-buy">
+                                    <p className="text-uppercase font-weight-bold">Mua ngay</p>
+                                    <p>Giao hàng miễn phí</p>
+                                </button>
+                            </Link>
                             {/* <button type="button" className="btn btn-installment">
                                 <p className="text-uppercase font-weight-bold">Trả góp</p>
                                 <p>Xét duyệt qua điện thoại</p>
@@ -113,12 +115,12 @@ class TopDetails extends Component {
                             </p>
                             <p className="d-flex">
                                 <i className="fas fa-award green pt-2 mr-2" />
-                               <span> Bảo hành 12 tháng chính hãng</span>
-                                </p>
+                                <span> Bảo hành 12 tháng chính hãng</span>
+                            </p>
                             <p className="d-flex">
-                                <i className="fas fa-truck green pt-2 mr-2" /> 
+                                <i className="fas fa-truck green pt-2 mr-2" />
                                 <span>Giao hàng miễn phí toàn quốc trong 60 phút</span>
-                                </p>
+                            </p>
                         </div>
                     </div>
                 </div>

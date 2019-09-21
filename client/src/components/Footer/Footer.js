@@ -67,7 +67,7 @@ class Footer extends Component {
 
                 <div className="copy-right text-center pt-2">
                     <p> 2019. Công ty cổ phần Điện thoại di động. GPDKKD: 0303217354 do sở KH ĐT TP.HCM cấp ngày 02/01/2007. Địa chỉ: 273 An Dương Vương, Quận 5, TP.Hồ Chí Minh.</p>
-                        <p>Điện thoại: 18001060. Email: cskh@thegioididong.com. Chịu trách nhiệm nội dung: Trần Nhật Linh. Xem chính sách sử dụng web</p>
+                        <p>Điện thoại: 18000808. Email: cskh@dtdd.com. Chịu trách nhiệm nội dung: . Xem chính sách sử dụng web</p>
                 </div>
             </footer>
         );

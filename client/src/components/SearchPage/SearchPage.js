@@ -151,26 +151,26 @@ class SearchPage extends Component {
                             <h5 className="border-bottom p-3">Tin tức (100)</h5>
                             <div className="news-Item border-bottom py-3 d-flex">
                                 <div className="news-Image">
-                                    <img src="/img/news/news-1.png" alt="" className="w-100" />
+                                    <Link to="/"><img src="/img/news/news-1.png" alt="" className="w-100" /></Link>
                                 </div>
                                 <div className="news-Info">
-                                    <p>Cách xử lý điện thoại khi rơi xuống nước</p>
+                                    <Link to="/">Cách xử lý điện thoại khi rơi xuống nước</Link>
                                 </div>
                             </div>
                             <div className="news-Item border-bottom py-3 d-flex">
                                 <div className="news-Image">
-                                    <img src="/img/news/news-1.png" alt="" className="w-100" />
+                                     <Link to="/"><img src="/img/news/news-1.png" alt="" className="w-100" /></Link>
                                 </div>
                                 <div className="news-Info">
-                                    <p>Cách xử lý điện thoại khi rơi xuống nước</p>
+                                     <Link to="/">Cách xử lý điện thoại khi rơi xuống nước</Link>
                                 </div>
                             </div>
                             <div className="news-Item border-bottom py-3 d-flex">
                                 <div className="news-Image">
-                                    <img src="/img/news/news-1.png" alt="" className="w-100" />
+                                     <Link to="/"><img src="/img/news/news-1.png" alt="" className="w-100" /></Link>
                                 </div>
                                 <div className="news-Info">
-                                    <p>Cách xử lý điện thoại khi rơi xuống nước</p>
+                                     <Link to="/">Cách xử lý điện thoại khi rơi xuống nước</Link>
                                 </div>
                             </div>
                             <Link to="/" className="text-center w-100 d-block py-2">Xem tất cả</Link>

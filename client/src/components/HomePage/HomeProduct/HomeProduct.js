@@ -7,6 +7,7 @@ import { actFetchProductsRequest, actFetchCategoriesRequest } from '../../../act
 
 class HomeProduct extends Component {
     componentDidMount() {
+        window.scrollTo(0,0);
         this.props.fetchAllProducts();
         this.props.fetchAllCategories();
     }
