@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import CategoryFilter from "./CategoryFilter";
 import CategoryProductList from "./CategoryProductList";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom"; 
 class Category extends Component {
 
     render() {
