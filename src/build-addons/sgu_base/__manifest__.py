@@ -1,13 +1,14 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "sgu_base",
+    'name': "Project Microservice",
 
     'summary': """
-        Short (1 phrase/line) summary of the module's purpose, used as
-        subtitle on modules listing or apps.openerp.com""",
+        Xay dung he thong ban dien thoai
+        theo mo hinh Microservice""",
 
     'description': """
-        Long description of module's purpose
+        Version : 0.1
+        Xay dung he thong ban dien thoai theo mo hinh Microservice
     """,
 
     'author': "SGU",
@@ -20,15 +21,19 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base', 'sale', 'stock', 'contacts', 'purchase', 'employee'],
-
+    # 'depends': ['base', 'sale', 'stock', 'contacts', 'purchase', 'employee'],
+    'depends': ['base', 'mail', 'muk_web_theme'],
+    
     # always loaded
     'data': [
-        # 'security/ir.model.access.csv',
-        'views/employee.xml',
-        'views/stock.xml',
-        'views/sale.xml',
-        'views/contacts.xml',
-        'views/purchase.xml',
+        'security/group.xml',
+        'security/ir.model.access.csv',
+        'data/ir_sequence_data.xml',
+        'views/views.xml',
+        # 'views/employee.xml',
+        # 'views/stock.xml',
+        # 'views/sale.xml',
+        # 'views/contacts.xml',
+        # 'views/purchase.xml',
     ],
 }

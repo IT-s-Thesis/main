@@ -1,2 +1,6 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_sgu_base_sgu_base,sgu_base.sgu_base,model_sgu_base_sgu_base,,1,0,0,0
+access_sgu_product,sgu_base.sgu_product,model_sgu_product,,1,1,1,1
+access_sgu_order,sgu_base.sgu_order,model_sgu_order,,1,1,1,1
+access_sgu_order_line,sgu_base.sgu_order_line,model_sgu_order_line,,1,1,1,1
+access_sgu_delivery,sgu_base.sgu_delivery,model_sgu_delivery,,1,1,1,1
+access_sgu_delivery_order,sgu_base.sgu_delivery_order,model_sgu_delivery_order,,1,1,1,1

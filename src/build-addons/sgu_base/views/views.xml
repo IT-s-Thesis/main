@@ -1,0 +1,301 @@
+<odoo>
+    <data>
+
+        <!-- sgu.tree tree view -->
+        <record id="sgu_product_view_tree" model="ir.ui.view">
+            <field name="name">sgu.product.view.tree</field>
+            <field name="model">sgu.product</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name" />
+                    <field name="type" />
+                    <field name="price" />
+                    <field name="on_hand" />
+                    <field name="qty_order" />
+                    <field name="qty_delivery" />
+                </tree>
+            </field>
+        </record>
+
+        <record id="sgu_base_product_view_form" model="ir.ui.view">
+			<field name="name">sgu_base.product.view.form</field>
+			<field name="model">sgu.product</field>
+			<field name="arch" type="xml">
+				<form string="Product Information">
+					<header>
+						<button name="open_reciept_product" type="object" string="Reciept Product"  
+							class="oe_highlight oe_read_only"/>
+					</header>
+					<sheet>
+						<div class="oe_button_box" name="button_box">
+							<button name="view_order" type="object"
+									class="oe_stat_button" icon="fa-usd">
+									<field name="qty_order" widget="statinfo" string="Order Sale"/>
+							</button>
+							<button name="view_delivery" type="object"
+									class="oe_stat_button" icon="fa-clock-o">
+									<field name="qty_delivery" widget="statinfo" string="Delivery Order"/>
+							</button>
+							<button name="view_onhand" type="object"
+									class="oe_stat_button" icon="fa-cubes">
+									<field name="on_hand" widget="statinfo" string="On hand"/>
+							</button>
+						</div>
+						<field name="image" widget='image' class="oe_avatar" options='{"preview_image":"image_medium"}'/>
+						<div class="oe_title">
+							<label for="name" class="oe_edit_only"/>
+							<h1>
+								<field name="name" placeholder="Product name" required="True"/>
+							</h1>
+						</div>
+						<group>
+							<group>
+								<field name="price" required="1"/>
+								<field name="type" required="1"/>
+								<field name="origin" />
+								<field name="vendor"/>
+							</group>
+							<group>
+								<field name="color" widget="colorpicker"/>
+								<field name="ram" />
+								<field name="memory" />
+							</group>
+						</group>
+					</sheet>
+					<div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+				</form>
+			</field>
+		</record>
+
+        <!-- sgu.product action window -->
+        <record id="sgu_product_action" model="ir.actions.act_window">
+            <field name="name">Product</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sgu.product</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_type">form</field>
+        </record>
+
+        <!-- sgu.order tree view -->
+        <record id="sgu_order_view_tree" model="ir.ui.view">
+            <field name="name">sgu.order.view.tree</field>
+            <field name="model">sgu.order</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name" />
+                    <field name="customer" />
+                    <field name="address" />
+                    <field name="phone" />
+                    <field name="total" />
+                    <field name="process" />
+                </tree>
+            </field>
+        </record>
+
+        <!-- tck_base.order form view -->
+        <record id="sgu_base_order_view_form" model="ir.ui.view">
+            <field name="name">sgu.order.view.form</field>
+            <field name="model">sgu.order</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <!-- <button name="check_validation" type="object" string="Validation" class="oe_highlight oe_read_only" attrs="{'invisible': [('validation', '=', 'True')]}"/>
+                        <button name="open_create_delivery" type="object" string="Delivery" class="oe_highlight oe_read_only" attrs="{'invisible': [('validation', '=', 'False')]}"/> -->
+                        <button name="check_validation" type="object" string="Validation" class="oe_highlight oe_read_only" />
+                        <button name="open_create_delivery" type="object" string="Delivery" class="oe_highlight oe_read_only" />
+                        <!-- <button name="change_cancel" type="object" string="Cancel" confirm="Are you sure?" class="oe_highlight oe_read_only" /> -->
+                    </header>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+							<button name="view_delivery" type="object"
+                                    attr="{}"
+									class="oe_stat_button" icon="fa-clock-o">
+									<field name="count_delivery" widget="statinfo" string="Delivery Order"/>
+							</button>
+						</div>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" readonly="1"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="customer" required="1" />
+                                <field name="address" required="1" />
+                                <field name="phone" required="1" />
+                            </group>
+                            <group>
+
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Order lines" name="order_lines">
+                                <field name="line_ids" mode="tree,form">
+                                    <tree string="List Order">
+                                        <field name="product_id" required="1"/>
+                                        <field name="description"/>
+                                        <field name="price" required="1"/>
+                                        <field name="qty" required="1"/>
+                                        <field name="sub_total" />
+                                        <field name="state" />
+                                    </tree>
+                                    <form string="Information">
+                                        <header>
+                                            <button name="change_lock" type="object" string="Come back" class="oe_highlight oe_read_only" groups="sgu_base.group_manager" />
+                                            <button name="change_unlock" type="object" string="Come back" class="oe_highlight oe_read_only" groups="sgu_base.group_manager" />
+                                            <button name="change_done" type="object" string="Done" class="oe_highlight oe_read_only" />
+                                            <button name="change_cancel" type="object" string="Cancel" confirm="Are you sure?" class="oe_highlight oe_read_only" />
+                                            <field name="state" widget="statusbar" statusbar_visible="order,delivery,done,cancel" />
+                                        </header>
+                                        <sheet>
+                                            <group>
+                                                <group>
+                                                    <field name="order_id" invisible="1" />
+                                                    <field name="product_id" required="1" />
+                                                    <field name="qty"/>
+                                                </group>
+                                                <group>
+                                                    <field name="description"/>
+                                                    <field name="note"/>
+                                                </group>
+                                            </group>
+                                            <group class="oe_subtotal_footer oe_right" colspan="2" name="price">
+                                                <field name="price"/>
+                                                <field name="qty" readonly="1"/>
+                                                <div class="oe_subtotal_footer_separator oe_inline o_td_label">
+                                                    <label for="sub_total"/>
+                                                </div>
+                                                <field name="sub_total" nolabel="1" class="oe_subtotal_footer_separator"/>
+                                            </group>
+                                        </sheet>
+                                    </form>
+                                </field>
+                                <group class="oe_subtotal_footer oe_right" colspan="2" name="sale_total">
+                                    <div class="oe_subtotal_footer_separator oe_inline o_td_label">
+                                        <label for="total"/>
+                                    </div>
+                                    <field name="total" nolabel="1" class="oe_subtotal_footer_separator"/>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <!-- sgu.order action window -->
+        <record id="sgu_order_action" model="ir.actions.act_window">
+            <field name="name">Order</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sgu.order</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_type">form</field>
+        </record>
+
+
+        <!-- sgu.delivery tree view -->
+        <record id="sgu_delivery_view_tree" model="ir.ui.view">
+            <field name="name">sgu.delivery.view.tree</field>
+            <field name="model">sgu.delivery</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name" />
+                    <field name="shipper_id" />
+                    <field name="order_id" />
+                    <field name="plan_complete" />
+                    <field name="date_complate" />
+                    <field name="process" />
+                </tree>
+            </field>
+        </record>
+
+        <!-- tck_base.delivery form view -->
+        <record id="sgu_base_delivery_view_form" model="ir.ui.view">
+            <field name="name">sgu.delivery.view.form</field>
+            <field name="model">sgu.delivery</field>
+            <field name="arch" type="xml">
+                <form string="Delivery">
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" readonly="1"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="shipper_id" required="1" options="{'no_create ': True, 'no_create_edit' : True}" />
+                                <field name="order_id" required="1" />
+                            </group>
+                            <group>
+                                <field name="plan_complete" required="1"/>
+                                <field name="date_complate"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Delivery lines" name="delivery_lines">
+                                <field name="line_ids" mode="tree,form">
+                                    <tree string="List Delivery">
+                                        <field name="order_line" required="1"/>
+                                        <field name="product_id"/>
+                                        <field name="state"/>
+                                        <field name="complete_date" />
+                                    </tree>
+                                    <form string="Information">
+                                        <header>
+                                            <button name="change_lock" type="object" string="Come back" class="oe_highlight oe_read_only" groups="sgu_base.group_manager" />
+                                            <button name="change_unlock" type="object" string="Come back" class="oe_highlight oe_read_only" groups="sgu_base.group_manager" />
+                                            <button name="change_come_back" type="object" string="Come back" class="oe_highlight oe_read_only" />
+                                            <button name="change_done" type="object" string="Done" class="oe_highlight oe_read_only" />
+                                            <button name="change_cancel" type="object" string="Cancel" confirm="Are you sure?" class="oe_highlight oe_read_only" />
+                                            <field name="state" widget="statusbar" statusbar_visible="delivery,come_back,done,cancel" />
+                                        </header>
+                                        <sheet>
+                                            <group>
+                                                <group>
+                                                    <field name="delivery_id" invisible="1" />
+                                                    <field name="order_line" required="1" 
+                                                        domain="[('order_id', '=', parent.order_id)]"
+                                                        options="{'no_create ': True, 'no_create_edit' : True}" />
+                                                    <field name="product_id" />
+                                                </group>
+                                                <group>
+                                                    <field name="complete_date" readonly="1"/>
+                                                </group>
+                                            </group>
+                                        </sheet>
+                                    </form>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <!-- sgu.delivery action window -->
+        <record id="sgu_delivery_action" model="ir.actions.act_window">
+            <field name="name">Delivery</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sgu.delivery</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_type">form</field>
+        </record>
+    
+
+        <!-- This Menu Item must have a parent and an action -->
+        <menuitem id="order_menu_act" name="Order" web_icon="sgu_base,static/description/order.png" action="sgu_order_action" sequence="60"/>
+        <menuitem id="delivery_menu_act" name="Delivery" web_icon="sgu_base,static/description/delivery.png" action="sgu_delivery_action" sequence="70"/>
+        <menuitem id="product_menu_act" name="Product" web_icon="sgu_base,static/description/product.png" action="sgu_product_action" sequence="50"/>
+    </data>
+</odoo>
