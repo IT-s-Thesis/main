@@ -23,7 +23,7 @@
 			<field name="arch" type="xml">
 				<form string="Product Information">
 					<header>
-						<button name="open_reciept_product" type="object" string="Reciept Product"  
+						<button name="open_adjust_product" type="object" string="Adjust Product"  
 							class="oe_highlight oe_read_only"/>
 					</header>
 					<sheet>
@@ -102,11 +102,15 @@
             <field name="arch" type="xml">
                 <form>
                     <header>
-                        <!-- <button name="check_validation" type="object" string="Validation" class="oe_highlight oe_read_only" attrs="{'invisible': [('validation', '=', 'True')]}"/>
-                        <button name="open_create_delivery" type="object" string="Delivery" class="oe_highlight oe_read_only" attrs="{'invisible': [('validation', '=', 'False')]}"/> -->
-                        <button name="check_validation" type="object" string="Validation" class="oe_highlight oe_read_only" />
-                        <button name="open_create_delivery" type="object" string="Delivery" class="oe_highlight oe_read_only" />
-                        <!-- <button name="change_cancel" type="object" string="Cancel" confirm="Are you sure?" class="oe_highlight oe_read_only" /> -->
+                        <button name="check_validation" type="object" string="Validation" class="oe_highlight oe_read_only" 
+                            attrs="{'invisible': [('state', '!=', 'order')]}"/>
+                        <button name="open_create_delivery" type="object" string="Delivery" class="oe_highlight oe_read_only" 
+                            attrs="{'invisible': [('state', '!=', 'delivery')]}"/>
+                        <button name="change_lock" type="object" string="Done" class="oe_highlight oe_read_only" attrs="{'invisible': ['|', '|', ('lock', '=', True), ('process', '!=', 100), ('state', '!=', 'delivery')]}" />
+                        <button name="change_unlock" type="object" string="Unlock" class="oe_read_only" attrs="{'invisible': [('lock', '=', False)]}"/>
+                        <button name="change_cancel" type="object" string="Cancel" confirm="Are you sure to cancel all?" class="oe_read_only" attrs="{'invisible': [('state', 'in', ['cancel', 'done'])]}" />
+                        <button name="change_reorder" type="object" string="Re-Order" confirm="Are you sure to re-order all?" class="oe_highlight oe_read_only" attrs="{'invisible': [('state', 'not in', ['cancel', 'done'])]}" />
+                        <field name="state" widget="statusbar" statusbar_visible="order,delivery,done,cancel" />
                     </header>
                     <sheet>
                         <div class="oe_button_box" name="button_box">
@@ -120,42 +124,49 @@
                             <h1>
                                 <field name="name" readonly="1"/>
                             </h1>
+                            <field name="process" widget="percentpie" 
+                                attrs="{'invisible': [('state', '=', False)]}"/>
                         </div>
                         <group>
                             <group>
-                                <field name="customer" required="1" />
-                                <field name="address" required="1" />
-                                <field name="phone" required="1" />
+                                <field name="customer" required="1" attrs="{'readonly': [('lock', '=', True)]}" options="{'no_create ': True, 'no_create_edit' : True}"/>
+                                <field name="address" required="1" attrs="{'readonly': [('lock', '=', True)]}"/>
+                                <field name="phone" required="1" attrs="{'readonly': [('lock', '=', True)]}"/>
                             </group>
                             <group>
-
+                                <field name="lock" invisible="1" />
                             </group>
                         </group>
                         <notebook>
                             <page string="Order lines" name="order_lines">
-                                <field name="line_ids" mode="tree,form">
-                                    <tree string="List Order">
+                                <field name="line_ids" mode="tree,form" attrs="{'readonly': [('lock', '=', True)]}">
+                                    <tree string="List Order" widget="section_and_note_one2many" editable="bottom">
+                                        <field name="order_id" invisible="1" />
                                         <field name="product_id" required="1"/>
-                                        <field name="description"/>
-                                        <field name="price" required="1"/>
+                                        <field name="name" readonly="1"/>
+                                        <field name="price" />
                                         <field name="qty" required="1"/>
                                         <field name="sub_total" />
-                                        <field name="state" />
+                                        <field name="description"/>
+                                        <field name="state" readonly="1"/>
                                     </tree>
                                     <form string="Information">
                                         <header>
-                                            <button name="change_lock" type="object" string="Come back" class="oe_highlight oe_read_only" groups="sgu_base.group_manager" />
-                                            <button name="change_unlock" type="object" string="Come back" class="oe_highlight oe_read_only" groups="sgu_base.group_manager" />
-                                            <button name="change_done" type="object" string="Done" class="oe_highlight oe_read_only" />
-                                            <button name="change_cancel" type="object" string="Cancel" confirm="Are you sure?" class="oe_highlight oe_read_only" />
+                                            <button name="change_reorder" type="object" string="Re-Order" confirm="Are you sure?" class="oe_highlight oe_read_only" attrs="{'invisible': [('state', 'not in', ['cancel', 'done'])]}" />
+                                            <button name="change_cancel" type="object" string="Cancel" confirm="Are you sure?" class="oe_highlight oe_read_only" attrs="{'invisible': [('state', 'in', ['cancel', 'done'])]}" />
                                             <field name="state" widget="statusbar" statusbar_visible="order,delivery,done,cancel" />
                                         </header>
                                         <sheet>
+                                            <div class="oe_title">
+                                                <h1>
+                                                    <field name="name" readonly="1"/>
+                                                </h1>
+                                            </div>
                                             <group>
                                                 <group>
                                                     <field name="order_id" invisible="1" />
                                                     <field name="product_id" required="1" />
-                                                    <field name="qty"/>
+                                                    <field name="qty" required="1"/>
                                                 </group>
                                                 <group>
                                                     <field name="description"/>
@@ -227,41 +238,49 @@
                             <h1>
                                 <field name="name" readonly="1"/>
                             </h1>
+                            <field name="process" widget="percentpie"/>
                         </div>
                         <group>
                             <group>
                                 <field name="shipper_id" required="1" options="{'no_create ': True, 'no_create_edit' : True}" />
-                                <field name="order_id" required="1" />
+                                <field name="order_id" required="1" invisible="context.get('hidden_order_id', False)" />
                             </group>
                             <group>
                                 <field name="plan_complete" required="1"/>
-                                <field name="date_complate"/>
+                                <field name="date_complate" readonly="1"/>
+                                <field name="lock" invisible="1"/>
                             </group>
                         </group>
                         <notebook>
                             <page string="Delivery lines" name="delivery_lines">
                                 <field name="line_ids" mode="tree,form">
-                                    <tree string="List Delivery">
-                                        <field name="order_line" required="1"/>
+                                    <tree string="List Delivery" editable="bottom">
+                                        <field name="order_line_id" required="1" 
+                                            domain="[('order_id.id', '=', parent.order_id), ('state', '=', 'order')]" 
+                                            options="{'no_create ': True, 'no_create_edit' : True}"
+                                            />
                                         <field name="product_id"/>
-                                        <field name="state"/>
-                                        <field name="complete_date" />
+                                        <field name="state" readonly="1"/>
+                                        <field name="complete_date" readonly="1"/>
                                     </tree>
                                     <form string="Information">
                                         <header>
-                                            <button name="change_lock" type="object" string="Come back" class="oe_highlight oe_read_only" groups="sgu_base.group_manager" />
-                                            <button name="change_unlock" type="object" string="Come back" class="oe_highlight oe_read_only" groups="sgu_base.group_manager" />
-                                            <button name="change_come_back" type="object" string="Come back" class="oe_highlight oe_read_only" />
-                                            <button name="change_done" type="object" string="Done" class="oe_highlight oe_read_only" />
-                                            <button name="change_cancel" type="object" string="Cancel" confirm="Are you sure?" class="oe_highlight oe_read_only" />
+                                            <button name="change_done" type="object" string="Done" class="oe_highlight oe_read_only" 
+                                                attrs="{'invisible' : [('state', 'in', ['done', 'cancel'])]}"/>
+                                            <button name="change_comeback" type="object" string="Come back" class="oe_highlight oe_read_only"
+                                                attrs="{'invisible' : [('state', '!=', 'delivery')]}" />
+                                            <button name="change_redelivery" type="object" string="Re-Delivery" confirm="Are you sure?" class="oe_highlight oe_read_only" 
+                                                attrs="{'invisible': [('state', 'not in', ['cancel', 'done'])]}" />
+                                            <button name="change_cancel" type="object" string="Cancel" confirm="Are you sure?" class="oe_read_only" 
+                                                attrs="{'invisible': [('state', 'in', ['cancel', 'done'])]}" />
                                             <field name="state" widget="statusbar" statusbar_visible="delivery,come_back,done,cancel" />
                                         </header>
                                         <sheet>
                                             <group>
                                                 <group>
                                                     <field name="delivery_id" invisible="1" />
-                                                    <field name="order_line" required="1" 
-                                                        domain="[('order_id', '=', parent.order_id)]"
+                                                    <field name="order_line_id" required="1" 
+                                                        domain="[('order_id.id', '=', parent.order_id)]"
                                                         options="{'no_create ': True, 'no_create_edit' : True}" />
                                                     <field name="product_id" />
                                                 </group>
@@ -274,6 +293,10 @@
                                 </field>
                             </page>
                         </notebook>
+                        <footer invisible="context.get('hidden_button_footer', True)">
+                            <button name="apply_delivery" string="Apply" type="object" class="oe_highlight"/>
+                            <button string="Back" class="btn-secondary" special="cancel"/>
+                        </footer>
                     </sheet>
                     <div class="oe_chatter">
                         <field name="message_follower_ids" widget="mail_followers"/>

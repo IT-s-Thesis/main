@@ -9,6 +9,13 @@
             <field name="padding">4</field>
             <field name="company_id" eval="False"/>
         </record>
+        <record id="seq_order_line" model="ir.sequence">
+            <field name="name">SGU Order Line</field>
+            <field name="code">sgu_base.order_line</field>
+            <field name="prefix">ORL</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
 
         <record id="seq_delivery" model="ir.sequence">
             <field name="name">SGU Delivery</field>

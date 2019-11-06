@@ -22,7 +22,8 @@
 
     # any module necessary for this one to work correctly
     # 'depends': ['base', 'sale', 'stock', 'contacts', 'purchase', 'employee'],
-    'depends': ['base', 'mail', 'muk_web_theme'],
+    'depends': ['base', 'mail'],
+    # 'muk_web_theme'
     
     # always loaded
     'data': [
@@ -30,6 +31,8 @@
         'security/ir.model.access.csv',
         'data/ir_sequence_data.xml',
         'views/views.xml',
+
+        'wizard/adjust_product_view.xml',
         # 'views/employee.xml',
         # 'views/stock.xml',
         # 'views/sale.xml',
