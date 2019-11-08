@@ -1,0 +1,74 @@
+<odoo>
+    <data>
+
+        <!-- sgu.tree tree view -->
+        <record id="sgu_product_view_tree" model="ir.ui.view">
+            <field name="name">sgu.product.view.tree</field>
+            <field name="model">sgu.product</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name" />
+                    <field name="type" />
+                    <field name="price" />
+                    <field name="on_hand" />
+                    <field name="qty_order" />
+                    <field name="qty_delivery" />
+                </tree>
+            </field>
+        </record>
+
+        <record id="sgu_base_product_view_form" model="ir.ui.view">
+			<field name="name">sgu_base.product.view.form</field>
+			<field name="model">sgu.product</field>
+			<field name="arch" type="xml">
+				<form string="Product Information">
+					<header>
+						<button name="open_adjust_product" type="object" string="Adjust Product"  
+							class="oe_highlight oe_read_only"/>
+					</header>
+					<sheet>
+						<div class="oe_button_box" name="button_box">
+							<button name="view_order" type="object"
+									class="oe_stat_button" icon="fa-usd">
+									<field name="qty_order" widget="statinfo" string="Order Sale"/>
+							</button>
+							<button name="view_delivery" type="object"
+									class="oe_stat_button" icon="fa-clock-o">
+									<field name="qty_delivery" widget="statinfo" string="Delivery Order"/>
+							</button>
+							<button name="view_onhand" type="object"
+									class="oe_stat_button" icon="fa-cubes">
+									<field name="on_hand" widget="statinfo" string="On hand"/>
+							</button>
+						</div>
+						<field name="image" widget='image' class="oe_avatar" options='{"preview_image":"image_medium"}'/>
+						<div class="oe_title">
+							<label for="name" class="oe_edit_only"/>
+							<h1>
+								<field name="name" placeholder="Product name" required="True"/>
+							</h1>
+						</div>
+						<group>
+							<group>
+								<field name="price" required="1"/>
+								<field name="type" required="1"/>
+								<field name="origin" />
+								<field name="vendor"/>
+							</group>
+							<group>
+								<field name="color" widget="colorpicker"/>
+								<field name="ram" />
+								<field name="memory" />
+							</group>
+						</group>
+					</sheet>
+					<div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+				</form>
+			</field>
+		</record>
+        
+    </data>
+</odoo>

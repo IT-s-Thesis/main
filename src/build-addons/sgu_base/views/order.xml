@@ -1,0 +1,132 @@
+<odoo>
+    <data>
+
+        <!-- sgu.order tree view -->
+        <record id="sgu_order_view_tree" model="ir.ui.view">
+            <field name="name">sgu.order.view.tree</field>
+            <field name="model">sgu.order</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name" />
+                    <field name="customer" />
+                    <field name="address" />
+                    <field name="phone" />
+                    <field name="total" />
+                    <field name="process" />
+                </tree>
+            </field>
+        </record>
+
+        <!-- tck_base.order form view -->
+        <record id="sgu_base_order_view_form" model="ir.ui.view">
+            <field name="name">sgu.order.view.form</field>
+            <field name="model">sgu.order</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <button name="check_validation" type="object" string="Validation" class="oe_highlight oe_read_only" 
+                            attrs="{'invisible': ['|', ('state', '!=', 'order'), ('lock', '=', True)]}"/>
+                        <button name="open_create_delivery" type="object" string="Delivery" class="oe_highlight oe_read_only" 
+                            attrs="{'invisible': ['|', ('state', '!=', 'delivery'), ('lock', '=', True)]}"/>
+                        <button name="change_done" type="object" string="Done" class="oe_highlight oe_read_only" attrs="{'invisible': ['|', '|', ('lock', '=', True), ('process', '!=', 100), ('state', '!=', 'delivery')]}" />
+                        <button name="change_cancel" type="object" string="Cancel" confirm="Are you sure to cancel all?" class="oe_read_only" 
+                            attrs="{'invisible': ['|', ('state', 'in', ['cancel', 'done']), ('lock', '=', True)]}" />
+                        <button name="change_reorder" type="object" string="Re-Order" confirm="Are you sure to re-order all?" class="oe_highlight oe_read_only"
+                            attrs="{'invisible': ['|', ('state', 'not in', ['cancel', 'done']), ('lock', '=', True)]}" />
+                        <button name="change_lock" type="object" string="Lock" class="oe_read_only" 
+                            attrs="{'invisible': ['|', ('lock', '=', True), ('state', 'not in', ['cancel', 'done'])]}"/>
+                        <button name="change_unlock" type="object" string="Unlock" class="oe_read_only" attrs="{'invisible': [('lock', '=', False)]}"/>
+                        <field name="state" widget="statusbar" statusbar_visible="order,delivery,done,cancel" />
+                    </header>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+							<button name="view_delivery" type="object"
+                                    attr="{}"
+									class="oe_stat_button" icon="fa-clock-o">
+									<field name="count_delivery" widget="statinfo" string="Delivery Order"/>
+							</button>
+						</div>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" readonly="1"/>
+                            </h1>
+                            <field name="process" widget="percentpie" 
+                                attrs="{'invisible': [('state', '=', False)]}"/>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="customer" required="1" attrs="{'readonly': [('lock', '=', True)]}" options="{'no_create ': True, 'no_create_edit' : True}"/>
+                                <field name="address" required="1" attrs="{'readonly': [('lock', '=', True)]}"/>
+                                <field name="phone" required="1" attrs="{'readonly': [('lock', '=', True)]}"/>
+                            </group>
+                            <group>
+                                <field name="lock" invisible="1" />
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Order lines" name="order_lines">
+                                <field name="line_ids" mode="tree,form" attrs="{'readonly': [('lock', '=', True)]}">
+                                    <tree string="List Order" widget="section_and_note_one2many" editable="bottom">
+                                        <field name="order_id" invisible="1" />
+                                        <field name="product_id" required="1"/>
+                                        <field name="name" readonly="1"/>
+                                        <field name="price" />
+                                        <field name="qty" required="1"/>
+                                        <field name="sub_total" />
+                                        <field name="description"/>
+                                        <field name="state" readonly="1"/>
+                                    </tree>
+                                    <form string="Information">
+                                        <header>
+                                            <button name="change_reorder" type="object" string="Re-Order" confirm="Are you sure?" class="oe_highlight oe_read_only" attrs="{'invisible': [('state', 'not in', ['cancel', 'done'])]}" />
+                                            <button name="change_cancel" type="object" string="Cancel" confirm="Are you sure?" class="oe_highlight oe_read_only" attrs="{'invisible': [('state', 'in', ['cancel', 'done'])]}" />
+                                            <field name="state" widget="statusbar" statusbar_visible="order,delivery,done,cancel" />
+                                        </header>
+                                        <sheet>
+                                            <div class="oe_title">
+                                                <h1>
+                                                    <field name="name" readonly="1"/>
+                                                </h1>
+                                            </div>
+                                            <group>
+                                                <group>
+                                                    <field name="order_id" invisible="1" />
+                                                    <field name="product_id" required="1" />
+                                                    <field name="qty" required="1"/>
+                                                </group>
+                                                <group>
+                                                    <field name="description"/>
+                                                    <field name="note"/>
+                                                </group>
+                                            </group>
+                                            <group class="oe_subtotal_footer oe_right" colspan="2" name="price">
+                                                <field name="price"/>
+                                                <field name="qty" readonly="1"/>
+                                                <div class="oe_subtotal_footer_separator oe_inline o_td_label">
+                                                    <label for="sub_total"/>
+                                                </div>
+                                                <field name="sub_total" nolabel="1" class="oe_subtotal_footer_separator"/>
+                                            </group>
+                                        </sheet>
+                                    </form>
+                                </field>
+                                <group class="oe_subtotal_footer oe_right" colspan="2" name="sale_total">
+                                    <div class="oe_subtotal_footer_separator oe_inline o_td_label">
+                                        <label for="total"/>
+                                    </div>
+                                    <field name="total" nolabel="1" class="oe_subtotal_footer_separator"/>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+    
+    </data>
+</odoo>

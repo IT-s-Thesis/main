@@ -33,10 +33,8 @@
         'views/views.xml',
 
         'wizard/adjust_product_view.xml',
-        # 'views/employee.xml',
-        # 'views/stock.xml',
-        # 'views/sale.xml',
-        # 'views/contacts.xml',
-        # 'views/purchase.xml',
+        'views/product.xml',
+        'views/order.xml',
+        'views/delivery.xml',
     ],
 }

@@ -1,0 +1,100 @@
+<odoo>
+    <data>
+
+        <!-- sgu.delivery tree view -->
+        <record id="sgu_delivery_view_tree" model="ir.ui.view">
+            <field name="name">sgu.delivery.view.tree</field>
+            <field name="model">sgu.delivery</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name" />
+                    <field name="shipper_id" />
+                    <field name="order_id" />
+                    <field name="plan_complete" />
+                    <field name="date_complate" />
+                    <field name="process" />
+                </tree>
+            </field>
+        </record>
+
+        <!-- tck_base.delivery form view -->
+        <record id="sgu_base_delivery_view_form" model="ir.ui.view">
+            <field name="name">sgu.delivery.view.form</field>
+            <field name="model">sgu.delivery</field>
+            <field name="arch" type="xml">
+                <form string="Delivery">
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" readonly="1"/>
+                            </h1>
+                            <field name="process" widget="percentpie"/>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="shipper_id" required="1" options="{'no_create ': True, 'no_create_edit' : True}" />
+                                <field name="order_id" required="1" invisible="context.get('hidden_order_id', False)" />
+                            </group>
+                            <group>
+                                <field name="plan_complete" required="1"/>
+                                <field name="date_complate" readonly="1"/>
+                                <field name="lock" invisible="1"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Delivery lines" name="delivery_lines">
+                                <field name="line_ids" mode="tree,form">
+                                    <tree string="List Delivery" editable="bottom">
+                                        <field name="order_line_id" required="1" 
+                                            domain="[('order_id.id', '=', parent.order_id), ('state', '=', 'order')]" 
+                                            options="{'no_create ': True, 'no_create_edit' : True}"
+                                            />
+                                        <field name="product_id"/>
+                                        <field name="state" readonly="1"/>
+                                        <field name="complete_date" readonly="1"/>
+                                    </tree>
+                                    <form string="Information">
+                                        <header>
+                                            <button name="change_done" type="object" string="Done" class="oe_highlight oe_read_only" 
+                                                attrs="{'invisible' : [('state', 'in', ['done', 'cancel'])]}"/>
+                                            <button name="change_comeback" type="object" string="Come back" class="oe_highlight oe_read_only"
+                                                attrs="{'invisible' : [('state', '!=', 'delivery')]}" />
+                                            <button name="change_redelivery" type="object" string="Re-Delivery" confirm="Are you sure?" class="oe_highlight oe_read_only" 
+                                                attrs="{'invisible': [('state', 'not in', ['cancel', 'done'])]}" />
+                                            <button name="change_cancel" type="object" string="Cancel" confirm="Are you sure?" class="oe_read_only" 
+                                                attrs="{'invisible': [('state', 'in', ['cancel', 'done'])]}" />
+                                            <field name="state" widget="statusbar" statusbar_visible="delivery,come_back,done,cancel" />
+                                        </header>
+                                        <sheet>
+                                            <group>
+                                                <group>
+                                                    <field name="delivery_id" invisible="1" />
+                                                    <field name="order_line_id" required="1" 
+                                                        domain="[('order_id.id', '=', parent.order_id)]"
+                                                        options="{'no_create ': True, 'no_create_edit' : True}" />
+                                                    <field name="product_id" />
+                                                </group>
+                                                <group>
+                                                    <field name="complete_date" readonly="1"/>
+                                                </group>
+                                            </group>
+                                        </sheet>
+                                    </form>
+                                </field>
+                            </page>
+                        </notebook>
+                        <footer invisible="context.get('hidden_button_footer', True)">
+                            <button name="apply_delivery" string="Apply" type="object" class="oe_highlight"/>
+                            <button string="Back" class="btn-secondary" special="cancel"/>
+                        </footer>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+    </data>
+</odoo>
