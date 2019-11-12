@@ -56,6 +56,7 @@ services:
       - --docker
       - --docker.swarmMode
       - --docker.watch
+      - --docker.exposedbydefault=false
       - --docker.domain=traefik.lc
     ports:
       - 80:80
@@ -68,6 +69,11 @@ services:
       placement:
         constraints:
           - node.role==manager
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=reverse-proxy-net"
+      - "traefik.port=8080"
+      - "traefik.frontend.rule=Host:traefik.$USE_HOSTNAME"
     ports:
       - target: 80
         published: 80
