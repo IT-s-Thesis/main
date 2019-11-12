@@ -143,7 +143,7 @@ class DeliveryOrder(models.Model):
 
     @api.multi
     def change_cancel(self):
-        self.write({'state': 'order'})
+        self.write({'state': 'cancel'})
         self.order_line_id.write({'state': 'cancel'})
         return {
             'type': 'ir.actions.client',

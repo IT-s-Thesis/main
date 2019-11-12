@@ -24,6 +24,7 @@ class Product(models.Model):
     image = fields.Binary("Image", attachment=True, default=_default_image)
     image_medium = fields.Binary("Medium-sized photo", attachment=True)
     image_small = fields.Binary("Small-sized photo", attachment=True)
+    image_url = fields.Char('On Hand', compute="_compute_url_image")
     qty = fields.Integer('Qty')
     on_hand = fields.Integer('On Hand', compute="_compute_qty_order")
     order_line_ids = fields.One2many('sgu.order.line', 'product_id', 'Order line')
@@ -36,8 +37,12 @@ class Product(models.Model):
     memory = fields.Char('Memory')
     origin = fields.Char('Origin')
     vendor = fields.Char('Vendor')
+    public_website = fields.Boolean('Public website', default=False)
 
-
+    @api.multi
+    def _compute_url_image(self):
+        for item in self:
+            item.image_url = '/web/image/sgu.product/' + str(item.id) + '/image'
 
     def open_adjust_product(self):
         self.ensure_one()
@@ -67,8 +72,8 @@ class Product(models.Model):
     @api.multi
     def _compute_qty_order(self):
         for rec in self:
-            if rec.order_line_ids.exists():
-                order_line = rec.order_line_ids.filtered(lambda o: o.state == 'done')
+            if rec.sudo().order_line_ids.exists():
+                order_line = rec.sudo().order_line_ids.filtered(lambda o: o.order_id.state in ['delivery', 'done'])
                 rec.qty_order = len(order_line.mapped('order_id'))
                 rec.on_hand = rec.qty - sum(order_line.mapped('qty'))
             else:

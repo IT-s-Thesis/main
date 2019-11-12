@@ -12,6 +12,7 @@
                     <field name="address" />
                     <field name="phone" />
                     <field name="total" />
+                    <field name="saleperson" groups="sgu_base.group_manager"/>
                     <field name="process" />
                 </tree>
             </field>
@@ -60,6 +61,7 @@
                                 <field name="phone" required="1" attrs="{'readonly': [('lock', '=', True)]}"/>
                             </group>
                             <group>
+                                <field name="saleperson" groups="sgu_base.group_manager" attrs="{'readonly': [('lock', '=', True)]}"/>
                                 <field name="lock" invisible="1" />
                             </group>
                         </group>

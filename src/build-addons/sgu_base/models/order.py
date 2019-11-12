@@ -25,6 +25,8 @@ class Order(models.Model):
     delivery_ids = fields.One2many('sgu.delivery', 'order_id', 'Delivery')
     count_delivery = fields.Integer('Count Delivery', compute="_compute_count_delivery")
 
+    saleperson = fields.Many2one('res.users', 'SalePerson', domain=lambda self: self.get_domain_saleperson())
+
     lock = fields.Boolean('Lock', default=False)
     state = fields.Selection([
         ('order', 'Order'), 
@@ -34,9 +36,12 @@ class Order(models.Model):
         ], 'State', default="order")
 
     def get_domain(self):
-        group_shipper = self.env.ref('sgu_base.group_customer')
-        return [('id', 'in', group_shipper.users.ids)]
+        group_customer = self.env.ref('sgu_base.group_customer')
+        return [('id', 'in', group_customer.users.ids)]
 
+    def get_domain_saleperson(self):
+        group_employee = self.env.ref('sgu_base.group_employee')
+        return [('id', 'in', group_employee.users.ids)]
 
     def view_delivery(self):
         self.ensure_one()
@@ -132,7 +137,8 @@ class Order(models.Model):
     @api.multi
     def change_reorder(self):
         for rec in self:
-            rec.line_ids.change_reorder()
+            rec.delivery_ids.unlink()
+            rec.line_ids.filtered(lambda o: o.state != 'order').write({'state': 'order'})
             rec.write({'state': 'order'})
 
     @api.multi

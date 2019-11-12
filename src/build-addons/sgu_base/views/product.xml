@@ -13,6 +13,7 @@
                     <field name="on_hand" />
                     <field name="qty_order" />
                     <field name="qty_delivery" />
+					<field name="public_website" groups="sgu_base.group_manager" />
                 </tree>
             </field>
         </record>
@@ -59,6 +60,7 @@
 								<field name="color" widget="colorpicker"/>
 								<field name="ram" />
 								<field name="memory" />
+								<field name="public_website" groups="sgu_base.group_manager" />
 							</group>
 						</group>
 					</sheet>

@@ -1,3 +1,8 @@
 
 Scale service odoo
 docker-compose -f "docker-compose.yml" up  --scale web=3
+
+
+New contatiner 
+
+docker-compose run --rm --no-deps web odoo -d runtest1
