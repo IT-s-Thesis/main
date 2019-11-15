@@ -1,8 +1,8 @@
 version: '3.5'
 
 networks:
-  reverse-proxy-net:
-    name: reverse-proxy-net
+  traefik-net:
+    name: traefik-net
     driver: overlay
     # external: true
   web-net:
@@ -18,20 +18,20 @@ services:
       - "8069:8069"
     volumes:
       - odoo-web-data:/var/lib/odoo
-    labels:
-      - "traefik.enable=true"
-      - "traefik.docker.network=reverse-proxy-net"
-      - "traefik.odoo.frontend.rule=Host:web.lc"
-      - "traefik.odoo.port=8069"
-      - "traefik.odoo.backend=odoo"
-      - "traefik.odoo.weight=10"
     networks:
-      - reverse-proxy-net
+      - traefik-net
       - web-net
     deploy:
       placement:
         constraints:
           - node.role==worker
+      labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=traefik-net"
+      - "traefik.odoo.frontend.rule=Host:web.$USE_HOSTNAME"
+      - "traefik.odoo.port=8069"
+      - "traefik.odoo.backend=odoo"
+      - "traefik.odoo.weight=10"
   db:
     image: postgres:10
     environment:
@@ -42,14 +42,15 @@ services:
     volumes:
       - odoo-db-data:/var/lib/postgresql/data/pgdata
     networks:
-      - reverse-proxy-net
+      - traefik-net
       - web-net
-    labels:
-      - "traefik.enable=false"
     deploy:
       placement:
         constraints:
           - node.role==manager
+      labels:
+      - "traefik.enable=false"
+
   traefik:
     image: traefik:1.7
     command:
@@ -57,33 +58,27 @@ services:
       - --docker.swarmMode
       - --docker.watch
       - --docker.exposedbydefault=false
-      - --docker.domain=traefik.lc
+      - --docker.domain=traefik.$USE_HOSTNAME
+      - --docker.endpoint = "unix:///var/run/docker.sock"
+      - --api
+      - --rest
     ports:
       - 80:80
       - 443:443
     networks:
-      - reverse-proxy-net
+      - traefik-net
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     deploy:
       placement:
         constraints:
           - node.role==manager
-    labels:
-      - "traefik.enable=true"
-      - "traefik.docker.network=reverse-proxy-net"
-      - "traefik.port=8080"
-      - "traefik.frontend.rule=Host:traefik.$USE_HOSTNAME"
-    ports:
-      - target: 80
-        published: 80
-        mode: host
-      - target: 443
-        published: 443
-        mode: host
-      - target: 8080
-        published: 8080
-        mode: host
+      labels:
+        - "traefik.enable=true"
+        - "traefik.docker.network=traefik-net"
+        - "traefik.port=8080"
+        - "traefik.frontend.rule=Host:traefik.$USE_HOSTNAME"
+
 
 volumes:
   odoo-web-data:
