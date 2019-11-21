@@ -61,7 +61,7 @@ services:
       - internal
       - proxy
   proxy:
-    image: traefik
+    image: traefik:1.7-alpine
     restart: always
     ports:
       - "80:80"

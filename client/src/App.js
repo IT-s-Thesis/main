@@ -1,26 +1,40 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+import { Switch, Route } from 'react-router-dom';
+import "./App.css"
+import Header from "./components/Header/Header";
+import Footer from "./components/Footer/Footer";
+import Home from "./components/HomePage/Home";
+import Category from "./components/CategoryPage/Category";
+import DetailsProduct from "./components/DetailsProduct/DetailsProduct";
+import CartPage from "./components/CartPage/CartPage";
+import NewsPage from "./components/NewsPage/NewsPage";
+import SearchPage from "./components/SearchPage/SearchPage";
+import AccessoriesPage from "./components/AccessoriesPage/AccessoriesPage";
+import ScrollUpButton from "react-scroll-up-button";
+class App extends Component {
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+  render() {
+
+    return (
+      <React.Fragment>
+        <Header />
+        <Switch>
+          <Route path="/" exact component={Home} />
+          <Route path="/category" match component={Category} />
+          <Route path="/details-:id" match component={DetailsProduct} />
+          <Route path="/cart" match component={CartPage} />
+          <Route path="/accessories" component={AccessoriesPage} />
+          <Route path="/news" component={NewsPage} />
+          <Route path="/search" component={SearchPage} />
+        </Switch>
+        <ScrollUpButton />
+        <Footer />
+      </React.Fragment>
+    );
+
+
+  }
 }
 
 export default App;
+

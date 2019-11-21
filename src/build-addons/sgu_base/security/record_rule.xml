@@ -1,0 +1,61 @@
+<odoo>
+    <data>
+        <record id="sgu_base_rule_product" model="ir.rule">
+            <field name="name">See public product</field>
+            <field name="model_id" ref="model_sgu_product"/>
+            <field name="domain_force">[('public_website','=', True)]</field>
+            <field name="perm_read" eval="1"/>
+            <field name="perm_write" eval="0"/>
+            <field name="perm_create" eval="0"/>
+            <field name="perm_unlink" eval="0"/>
+            <field name="groups" eval="[(4,ref('sgu_base.group_employee')), 
+                (4,ref('base.group_public')), 
+                (4,ref('sgu_base.group_shipper'))]"/>
+        </record>
+
+        <record id="sgu_base_rule_order_customer" model="ir.rule">
+            <field name="name">See order customer</field>
+            <field name="model_id" ref="model_sgu_order"/>
+            <field name="domain_force">[('customer','=', user.id)]</field>
+            <field name="perm_read" eval="1"/>
+            <field name="perm_write" eval="1"/>
+            <field name="perm_create" eval="1"/>
+            <field name="perm_unlink" eval="0"/>
+            <field name="groups" eval="[(4,ref('sgu_base.group_customer'))]"/>
+        </record>
+
+        <record id="sgu_base_rule_order_employee" model="ir.rule">
+            <field name="name">See order employee</field>
+            <field name="model_id" ref="model_sgu_order"/>
+            <field name="domain_force">[('saleperson','=', user.id)]</field>
+            <field name="perm_read" eval="1"/>
+            <field name="perm_write" eval="1"/>
+            <field name="perm_create" eval="0"/>
+            <field name="perm_unlink" eval="0"/>
+            <field name="groups" eval="[(4,ref('sgu_base.group_employee'))]"/>
+        </record>
+
+        <record id="sgu_base_rule_delivery_employee" model="ir.rule">
+            <field name="name">See delivery employee</field>
+            <field name="model_id" ref="model_sgu_delivery"/>
+            <field name="domain_force">[('order_id.saleperson','=', user.id)]</field>
+            <field name="perm_read" eval="1"/>
+            <field name="perm_write" eval="1"/>
+            <field name="perm_create" eval="1"/>
+            <field name="perm_unlink" eval="0"/>
+            <field name="groups" eval="[(4,ref('sgu_base.group_employee'))]"/>
+        </record>
+        
+
+        <record id="sgu_base_rule_delivery_shipper" model="ir.rule">
+            <field name="name">See delivery shipper</field>
+            <field name="model_id" ref="model_sgu_delivery"/>
+            <field name="domain_force">[('shipper_id','=', user.id)]</field>
+            <field name="perm_read" eval="1"/>
+            <field name="perm_write" eval="1"/>
+            <field name="perm_create" eval="0"/>
+            <field name="perm_unlink" eval="0"/>
+            <field name="groups" eval="[(4,ref('sgu_base.group_shipper'))]"/>
+        </record>
+    </data>
+</odoo>
