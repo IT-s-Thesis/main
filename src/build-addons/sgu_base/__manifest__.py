@@ -22,8 +22,8 @@
 
     # any module necessary for this one to work correctly
     # 'depends': ['base', 'sale', 'stock', 'contacts', 'purchase', 'employee'],
-    'depends': ['base', 'mail'],
-    # 'muk_web_theme'
+    # 'depends': ['base', 'mail', 'muk_web_theme', 'tgl_format_number', 'odoo-rest-api'],
+    'depends': ['base', 'mail', 'odoo-rest-api',],
     
     # always loaded
     'data': [
@@ -34,8 +34,11 @@
         'views/views.xml',
 
         'wizard/adjust_product_view.xml',
+        'wizard/comback_view.xml',
         'views/product.xml',
         'views/order.xml',
         'views/delivery.xml',
     ],
+    'installable': True,
+    'auto_install': True,
 }

@@ -26,6 +26,8 @@ class Order(models.Model):
     count_delivery = fields.Integer('Count Delivery', compute="_compute_count_delivery")
 
     saleperson = fields.Many2one('res.users', 'SalePerson', domain=lambda self: self.get_domain_saleperson())
+    payment_method = fields.Selection([('cod', 'Cash of Delivery'), ('transfer', 'Transfer')], 
+        default='cod', string='Payment Method')
 
     lock = fields.Boolean('Lock', default=False)
     state = fields.Selection([
@@ -173,7 +175,7 @@ class OrderLine(models.Model):
     order_id = fields.Many2one('sgu.order')
     description = fields.Char('Description')
     product_id = fields.Many2one('sgu.product', 'Product')
-    price = fields.Integer('Price', related="product_id.price", reonly=True, store=True)
+    price = fields.Integer('Price')
     qty = fields.Integer('Quantity')
     sub_total = fields.Integer('Sub Total', compute="_compute_subtotal")
     state = fields.Selection([
@@ -184,6 +186,10 @@ class OrderLine(models.Model):
         ], 'State', default="order")
     note = fields.Text('Note')
     
+    @api.onchange('product_id')
+    def default_price(self):
+        if self.product_id:
+            self.price = self.product_id.price
 
     @api.depends('price', 'qty')
     @api.multi

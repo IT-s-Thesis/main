@@ -24,17 +24,20 @@
 			<field name="arch" type="xml">
 				<form string="Product Information">
 					<header>
-						<button name="open_adjust_product" type="object" string="Adjust Product"  
+						<button name="open_adjust_product" type="object" string="Adjust Product"
+							groups="sgu_base.group_manager"  
 							class="oe_highlight oe_read_only"/>
 					</header>
 					<sheet>
 						<div class="oe_button_box" name="button_box">
 							<button name="view_order" type="object"
-									class="oe_stat_button" icon="fa-usd">
+									class="oe_stat_button" icon="fa-usd"
+									groups="sgu_base.group_manager"  >
 									<field name="qty_order" widget="statinfo" string="Order Sale"/>
 							</button>
 							<button name="view_delivery" type="object"
-									class="oe_stat_button" icon="fa-clock-o">
+									class="oe_stat_button" icon="fa-clock-o"
+									groups="sgu_base.group_manager"  >
 									<field name="qty_delivery" widget="statinfo" string="Delivery Order"/>
 							</button>
 							<button name="view_onhand" type="object"

@@ -47,7 +47,6 @@
         </record>
         
 
-
         <record id="sgu_base_rule_delivery_shipper" model="ir.rule">
             <field name="name">See delivery shipper</field>
             <field name="model_id" ref="model_sgu_delivery"/>

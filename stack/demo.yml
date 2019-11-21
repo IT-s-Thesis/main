@@ -59,7 +59,6 @@ services:
       - --docker.watch
       - --docker.exposedbydefault=false
       - --docker.domain=traefik.$USE_HOSTNAME
-      - --docker.endpoint = "unix:///var/run/docker.sock"
       - --api
       - --rest
     ports:

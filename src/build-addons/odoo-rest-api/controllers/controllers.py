@@ -7,6 +7,7 @@ import datetime
 
 from odoo import http
 from odoo.http import request
+from odoo.exceptions import ValidationError, UserError
 
 _logger = logging.getLogger(__name__)
 
@@ -120,24 +121,35 @@ class OdooAPI(http.Controller):
 
     @http.route(
         '/api/register', 
-        auth='public', methods=['POST'], csrf=False)
+        auth='public', methods=['POST'], type='http', csrf=False)
     def register(self, **params):
         try:
-            data = params['data']
-        except KeyError:
-            _logger.exception(
-                "'data' parameter is not found on POST request"
+            data = {
+                'email': params.get('email'),
+                'login': params.get('email'),
+                'name': params.get('name'),
+                'password': params.get('password'),
+                'customer': True,
+                'phone': params.get('phone', False),
+                'contact_address': params.get('contact_address', False),
+            }
+            record = request.env['res.users'].sudo().create(data)
+            group_customer = request.env.ref('sgu_base.group_customer')
+            record.sudo().write({'groups_id': [(6, 0,[group_customer.id])]})
+            return http.Response(
+                json.dumps({"record_id": record.id}),
+                status=200,
+                mimetype='application/json'
             )
-
-        if "context" in post:
-            context = post["context"]
-            record = request.env['res.users'].with_context(**context)\
-                     .create(data)
-        else:
-            record = request.env['res.users'].create(data)
-        group_customer = request.env.ref('sgu_base.group_customer')
-        group_customer.write({'users': [(3, record.id)]})
-        return record.id
+        except Exception as ex:
+            return http.Response(
+                json.dumps({
+                    "status": 'error',
+                    "message": ex
+                }),
+                status=500,
+                mimetype='application/json'
+            )
 
     @http.route(
         '/api/notauth/<string:model>', 
@@ -157,7 +169,8 @@ class OdooAPI(http.Controller):
                     query[0].pop(field_to_exclude)
         
         if "filter" in params:
-            filters = json.loads(params["filter"])
+            json_str = params["filter"].replace('"*"', '"&"')
+            filters = json.loads(json_str)
             records = request.env[model].search(filters)
 
         prev_page = None
@@ -229,7 +242,8 @@ class OdooAPI(http.Controller):
                     query[0].pop(field_to_exclude)
         
         if "filter" in params:
-            filters = json.loads(params["filter"])
+            json_str = params["filter"].replace('"*"', '"&"')
+            filters = json.loads(json_str)
             records = request.env[model].search(filters)
 
         prev_page = None
@@ -341,8 +355,9 @@ class OdooAPI(http.Controller):
             )
             return data
         return record.id
+        
     @http.route(
-        '/api/<string:model>/<int:rec_id>/', 
+        '/api/<string:model>/<int:rec_id>/',
         type='json', auth="user", 
         methods=['PUT'], website=True, csrf=False)
     def put_model_record(self, model, rec_id, **post):

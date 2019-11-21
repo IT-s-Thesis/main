@@ -1,0 +1,29 @@
+<odoo>
+    <data>
+
+
+        <!-- comeback.product.wizard form view -->
+        <record id="comeback_product_wizard" model="ir.ui.view">
+            <field name="name">comeback.product.wizard.view.form</field>
+            <field name="model">comeback.product.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Comeback Product">
+                    <sheet>
+						<group>
+                            <group>
+								<field name="delivery_item" invisible="1"/>
+                                <field name="comeback_date" />
+							</group>
+							<group>
+							</group>
+						</group>
+					</sheet>
+					<footer>
+						<button name="update_comeback" type="object" string="Schedule"  class="btn-primary"/>
+                        <button string="Back" class="btn-secondary" special="cancel" />
+					</footer>
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>

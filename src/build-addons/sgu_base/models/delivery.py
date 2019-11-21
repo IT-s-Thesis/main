@@ -26,6 +26,18 @@ class Delivery(models.Model):
 
     lock = fields.Boolean('Lock', default=False)
     validation = fields.Boolean('Validation', default=False)
+    collection = fields.Boolean('Collection', compute="_compute_collection")
+    paid = fields.Boolean('Paid', compute='_compute_paid')
+
+    @api.depends('order_id')
+    @api.multi
+    def _compute_collection(self):
+        for rec in self:
+            if rec.order_id.exists():
+                if rec.order_id.payment_method == 'cod':
+                    rec.collection = True
+                else:
+                    rec.collection = False
 
     @api.multi
     def change_lock(self):
@@ -65,7 +77,18 @@ class Delivery(models.Model):
         for line in self.line_ids:
             order_line.write({'state', 'delivery'})
 
+    @api.depends('process')
+    @api.multi
+    def _compute_paid(self):
+        for rec in self:
+            if rec.process == 100:
+                rec.paid = True
+            else:
+                rec.paid = False
+
+
     @api.depends('line_ids')
+    @api.multi
     def _compute_process(self):
         for res in self:
             if res.line_ids.exists():
@@ -83,6 +106,7 @@ class DeliveryOrder(models.Model):
 
     delivery_id  = fields.Many2one('sgu.delivery', 'Delivery')
     product_id = fields.Many2one('sgu.product', related='order_line_id.product_id', readonly=True)
+    qty = fields.Integer('Quantity', related='order_line_id.qty', readonly=True)
     order_line_id = fields.Many2one('sgu.order.line', 'Order line')
     state = fields.Selection([
         ('delivery', 'Delivery'), 
@@ -91,7 +115,7 @@ class DeliveryOrder(models.Model):
         ('cancel', 'Cancel')
         ], 'State', default="delivery")
     complete_date = fields.Datetime(string='Complete Date')
-
+    comeback_date = fields.Datetime(string='Comeback Date')
 
     _sql_constraints = [
         ('unique_order_line_id', 'unique (order_line_id)', 'Order line is unique!')
@@ -117,11 +141,36 @@ class DeliveryOrder(models.Model):
     def change_done(self):
         self.write({'state': 'done'})
         self.order_line_id.write({'state': 'done'})
+        body = "<h3>Done Product</h3><ul>"
+        body += "<li><b>Product</b>: %s</li>" % (self.product_id.name)
+        body += "<li><b>Date</b>: %s</li>" % (datetime.now().strftime('%d/%m/%Y, %H:%M:%S'))
+        body += "</ul>"
+
+        self.env['mail.message'].create({
+                'subject': 'Done Product',
+                'author_id': self.env.user.partner_id.id,
+                'model': 'sgu.delivery',
+                'res_id': self.delivery_id.id,
+                'body': body,
+            })
         return {
             'type': 'ir.actions.client',
             'tag': 'reload',
         }
         
+    def open_comeback_wizard(self):
+        self.ensure_one()
+        return {
+            'name': _('Comeback'),
+            'type': 'ir.actions.act_window',
+            'res_model': 'comeback.product.wizard',
+            'views': [[self.env.ref('sgu_base.comeback_product_wizard').id, "form"]],
+            'target': 'new',
+            'context': {
+                'default_delivery_item': self.id,
+            }
+        }
+
 
     @api.multi
     def change_comeback(self):
@@ -134,8 +183,23 @@ class DeliveryOrder(models.Model):
 
     @api.multi
     def change_redelivery(self):
-        self.write({'state': 'delivery'})
+        self.write({
+            'state': 'delivery',
+            'complete_date': False,
+        })
         self.order_line_id.write({'state': 'delivery'})
+        body = "<h3>Redelivery Product</h3><ul>"
+        body += "<li><b>Product</b>: %s</li>" % (self.product_id.name)
+        body += "<li><b>Date</b>: %s</li>" % (datetime.now().strftime('%d/%m/%Y, %H:%M:%S'))
+        body += "</ul>"
+
+        self.env['mail.message'].create({
+                'subject': 'Redelivery Product',
+                'author_id': self.env.user.partner_id.id,
+                'model': 'sgu.delivery',
+                'res_id': self.delivery_id.id,
+                'body': body,
+            })
         return {
             'type': 'ir.actions.client',
             'tag': 'reload',
@@ -144,7 +208,22 @@ class DeliveryOrder(models.Model):
     @api.multi
     def change_cancel(self):
         self.write({'state': 'cancel'})
-        self.order_line_id.write({'state': 'cancel'})
+        self.order_line_id.write({
+            'state': 'cancel',
+            'complete_date': False,
+        })
+        body = "<h3>Cancel Product</h3><ul>"
+        body += "<li><b>Product</b>: %s</li>" % (self.product_id.name)
+        body += "<li><b>Date</b>: %s</li>" % (datetime.now().strftime('%d/%m/%Y, %H:%M:%S'))
+        body += "</ul>"
+
+        self.env['mail.message'].create({
+                'subject': 'Cancel Product',
+                'author_id': self.env.user.partner_id.id,
+                'model': 'sgu.delivery',
+                'res_id': self.delivery_id.id,
+                'body': body,
+            })
         return {
             'type': 'ir.actions.client',
             'tag': 'reload',
