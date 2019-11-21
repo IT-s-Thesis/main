@@ -8,3 +8,10 @@
 
 ### Huong dan cai dat, trien khai
 [Drive](https://drive.google.com/drive/folders/1VCfvUNrPceRN29xGwpoczHLwe8pCTTHI?usp=sharing)
+
+### API Doc
+[Apiary](https://peterdinh.docs.apiary.io/#)
+
+### Microservice Deploy
+[Apiary](https://github.com/IT-s-Thesis/deploy)
+
