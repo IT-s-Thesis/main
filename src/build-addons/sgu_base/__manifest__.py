@@ -1,16 +1,18 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "sgu_base",
+    'name': "Project Microservice",
 
     'summary': """
-        Module SGU Project""",
+        Xay dung he thong ban dien thoai
+        theo mo hinh Microservice""",
 
     'description': """
-        Module SGU Project
+        Version : 0.1
+        Xay dung he thong ban dien thoai theo mo hinh Microservice
     """,
 
-    'author': "My Friends",
-    'website': "http://fit.sgu.com",
+    'author': "SGU",
+    'website': "http://sgu.com.vn",
 
     # Categories can be used to filter modules in modules listing
     # Check https://github.com/odoo/odoo/blob/12.0/odoo/addons/base/data/ir_module_category_data.xml
@@ -19,21 +21,24 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': [
-        'base',
-        'muk_web_theme',
-        'contact',
-        'hr',
-        'sale_management',
-        'stock',
-        'format_number',
-        'restful',
-        ],
-
+    # 'depends': ['base', 'sale', 'stock', 'contacts', 'purchase', 'employee'],
+    # 'depends': ['base', 'mail', 'muk_web_theme', 'tgl_format_number', 'odoo-rest-api'],
+    'depends': ['base', 'mail', 'odoo-rest-api',],
+    
     # always loaded
     'data': [
-        # 'security/ir.model.access.csv',
+        'security/group.xml',
+        'security/ir.model.access.csv',
+        'security/record_rule.xml',
+        'data/ir_sequence_data.xml',
         'views/views.xml',
-        'views/templates.xml',
+
+        'wizard/adjust_product_view.xml',
+        'wizard/comback_view.xml',
+        'views/product.xml',
+        'views/order.xml',
+        'views/delivery.xml',
     ],
+    'installable': True,
+    'auto_install': True,
 }

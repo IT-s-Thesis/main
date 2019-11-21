@@ -1,0 +1,27 @@
+version: '3.5'
+
+services:
+  client:
+    container_name: client
+    build: ./client
+    volumes:
+      - './client:/app'
+      - '/app/node_modules'
+    ports:
+      - '5001:5001'
+    environment:
+      - NODE_ENV=development
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=proxy"
+      - "traefik.client.frontend.rule=Host:client.localhost"
+      - "traefik.client.port=5001"
+      - "traefik.client.backend=client"
+    networks:
+      - internal
+      - proxy
+
+networks:
+ reverse-proxy-net:
+   name: reverse-proxy-net
+   driver: overlay

@@ -13,7 +13,7 @@ from odoo import http
 #             'objects': http.request.env['sgu_base.sgu_base'].search([]),
 #         })
 
-#     @http.route('/sgu_base/sgu_base/objects/<model("sgu_base.sgu_base"):obj>/', auth='public')
+#     @http.route('/call/<model("sgu_base.sgu_base"):obj>/', auth='public')
 #     def object(self, obj, **kw):
 #         return http.request.render('sgu_base.object', {
 #             'object': obj
