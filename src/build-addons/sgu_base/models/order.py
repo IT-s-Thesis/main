@@ -6,15 +6,20 @@ from odoo.modules.module import get_module_resource
 import base64, random
 from datetime import datetime, date
 
-
 class Order(models.Model):
     _name = 'sgu.order'
     _description = "Order"
     _inherit = ['mail.thread', 'mail.activity.mixin']
     _rec_name = 'name'
 
+    @api.model
+    def _default_token(self):
+        chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
+        for record in self:
+            record.code_active = ''.join(random.SystemRandom().choice(chars) for _ in range(6))
 
     name = fields.Char('Name')
+    token = fields.Char('Token', default=_default_token)
     customer = fields.Many2one('res.users', 'Customer', domain=lambda self: self.get_domain())
     address = fields.Char('Customer Address')
     phone = fields.Char('Customer Phone')
@@ -171,11 +176,14 @@ class OrderLine(models.Model):
     _description = "Order"
     _rec_name = 'name'
 
+
+    
+
     name = fields.Char('Name')
     order_id = fields.Many2one('sgu.order')
     description = fields.Char('Description')
-    product_id = fields.Many2one('sgu.product', 'Product')
-    price = fields.Integer('Price')
+    product_id = fields.Many2one('sgu.product', 'Product', required=True)
+    price = fields.Integer('Price', default=lambda self: self.product_id.price)
     qty = fields.Integer('Quantity')
     sub_total = fields.Integer('Sub Total', compute="_compute_subtotal")
     state = fields.Selection([
@@ -186,6 +194,7 @@ class OrderLine(models.Model):
         ], 'State', default="order")
     note = fields.Text('Note')
     
+
     @api.onchange('product_id')
     def default_price(self):
         if self.product_id:

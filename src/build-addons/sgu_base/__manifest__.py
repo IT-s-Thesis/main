@@ -23,7 +23,7 @@
     # any module necessary for this one to work correctly
     # 'depends': ['base', 'sale', 'stock', 'contacts', 'purchase', 'employee'],
     # 'depends': ['base', 'mail', 'muk_web_theme', 'tgl_format_number', 'odoo-rest-api'],
-    'depends': ['base', 'mail', 'odoo-rest-api',],
+    'depends': ['base', 'mail'],
     
     # always loaded
     'data': [

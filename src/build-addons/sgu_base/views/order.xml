@@ -61,6 +61,7 @@
                             </group>
                             <group>
                                 <field name="saleperson" groups="sgu_base.group_manager" attrs="{'readonly': [('lock', '=', True)]}"/>
+                                <field name="saleperson" groups="sgu_base.group_shipper" readonly="1"/>
                                 <field name="payment_method" attrs="{'readonly': [('lock', '=', True)]}"/>
                                 <field name="lock" invisible="1" />
                             </group>
@@ -69,12 +70,11 @@
                             <page string="Order lines" name="order_lines">
                                 <field name="line_ids" mode="tree,form" attrs="{'readonly': [('lock', '=', True)]}">
                                     <tree string="List Order" widget="section_and_note_one2many" editable="bottom"
-                                        decoration-muted="state == 'order'"
                                         decoration-success="state == 'done'" 
 										decoration-danger="state == 'cancel'" 
 										decoration-info="state == 'delivery'">
                                         <field name="order_id" invisible="1" />
-                                        <field name="product_id" required="1"/>
+                                        <field name="product_id" required="1" domain="[('public_website', '=', True)]"/>
                                         <field name="name" readonly="1"/>
                                         <field name="price" />
                                         <field name="qty" required="1"/>

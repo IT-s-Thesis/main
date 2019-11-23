@@ -17,6 +17,7 @@ class Delivery(models.Model):
 
     name = fields.Char('Name')
     shipper_id = fields.Many2one('res.users', 'Shipper', domain=lambda self: self.get_domain())
+    saleperson = fields.Many2one('res.users', 'SalePerson', related="order_id.saleperson")
     process = fields.Integer('Process', compute='_compute_process')
     order_id = fields.Many2one('sgu.order', 'Order', unique=True)
     line_ids = fields.One2many('sgu.delivery.order', 'delivery_id', 'Delivery line')
@@ -59,6 +60,11 @@ class Delivery(models.Model):
         group_shipper = self.env.ref('sgu_base.group_shipper')
         return [('id', 'in', group_shipper.users.ids)]
 
+    def view_collection(self):
+        return
+
+    def view_pail(self):
+        return
 
     @api.model
     def create(self, vals):
@@ -81,7 +87,7 @@ class Delivery(models.Model):
     @api.multi
     def _compute_paid(self):
         for rec in self:
-            if rec.process == 100:
+            if rec.process == 100 or rec.order_id.payment_method == 'transfer':
                 rec.paid = True
             else:
                 rec.paid = False

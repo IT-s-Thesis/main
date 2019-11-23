@@ -45,9 +45,15 @@
                         <group>
                             <group>
                                 <field name="shipper_id" required="1" options="{'no_create ': True, 'no_create_edit' : True}" />
-                                <field name="order_id" required="1" invisible="context.get('hidden_order_id', False)" />
+                                <field name="order_id" required="1" groups="sgu_base.group_manager" 
+                                    options="{'no_open': False}" invisible="context.get('hidden_order_id', False)" />
+                                <field name="order_id" required="1" groups="sgu_base.group_employee" 
+                                    options="{'no_open': False}" invisible="context.get('hidden_order_id', False)" />
+                                <field name="order_id" required="1" groups="sgu_base.group_shipper" 
+                                    options="{'no_open': True}" invisible="context.get('hidden_order_id', False)" />
                             </group>
                             <group>
+                                <field name="saleperson" readonly="1"/>
                                 <field name="plan_complete" required="1"/>
                                 <field name="date_complate" readonly="1"/>
                                 <field name="lock" invisible="1"/>
@@ -76,11 +82,11 @@
                                     <form string="Information">
                                         <header>
                                             <button name="change_done" type="object" string="Done" class="oe_highlight oe_read_only" 
-                                                attrs="{'invisible' : [('state', 'in', ['done', 'cancel'])]}"/>
+                                                groups="sgu_base.group_shipper" attrs="{'invisible' : [('state', 'in', ['done', 'cancel'])]}"/>
                                             <button name="open_comeback_wizard" type="object" string="Come back" class="oe_highlight oe_read_only"
-                                                attrs="{'invisible' : [('state', '!=', 'delivery')]}" />
+                                                groups="sgu_base.group_shipper" attrs="{'invisible' : [('state', '!=', 'delivery')]}" />
                                             <button name="change_redelivery" type="object" string="Re-Delivery" confirm="Are you sure?" class="oe_highlight oe_read_only" 
-                                                attrs="{'invisible': [('state', 'not in', ['cancel', 'done'])]}" />
+                                                groups="sgu_base.group_employee" attrs="{'invisible': [('state', 'not in', ['cancel', 'done'])]}" />
                                             <button name="change_cancel" type="object" string="Cancel" confirm="Are you sure?" class="oe_read_only" 
                                                 attrs="{'invisible': [('state', 'in', ['cancel', 'done'])]}" />
                                             <field name="state" widget="statusbar" statusbar_visible="delivery,come_back,done,cancel" />

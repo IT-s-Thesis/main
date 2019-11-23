@@ -24,7 +24,7 @@ class Product(models.Model):
     image = fields.Binary("Image", attachment=True, default=_default_image)
     image_medium = fields.Binary("Medium-sized photo", attachment=True)
     image_small = fields.Binary("Small-sized photo", attachment=True)
-    image_url = fields.Char('On Hand', compute="_compute_url_image")
+    image_url = fields.Char('Image Url', compute="_compute_url_image")
     qty = fields.Integer('Qty')
     on_hand = fields.Integer('On Hand', compute="_compute_qty_order")
     order_line_ids = fields.One2many('sgu.order.line', 'product_id', 'Order line')

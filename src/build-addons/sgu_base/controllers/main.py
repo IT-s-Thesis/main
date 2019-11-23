@@ -4,12 +4,14 @@ import math
 import logging
 import requests
 import datetime
+from odoo import SUPERUSER_ID
 
 from odoo import http
 from odoo.http import request
 from odoo.exceptions import ValidationError, UserError
 
 _logger = logging.getLogger(__name__)
+
 
 try:
     import dictfier
@@ -43,7 +45,9 @@ def nested_flat_obj(obj, parent_obj):
 def nested_iter_obj(obj, parent_obj):
     return obj
 
-class OdooAPI(http.Controller):
+class SguBase(http.Controller):
+
+
     @http.route('/auth/', 
         type='json', auth='public',
         methods=["POST"], csrf=False, sitemap=False)
@@ -119,47 +123,23 @@ class OdooAPI(http.Controller):
         result = getattr(obj, function)(*args, **kwargs)
         return result
 
-    @http.route(
-        '/api/register', 
-        auth='public', methods=['POST'], type='http', csrf=False)
-    def register(self, **params):
-        try:
-            data = {
-                'email': params.get('email'),
-                'login': params.get('email'),
-                'name': params.get('name'),
-                'password': params.get('password'),
-                'customer': True,
-                'phone': params.get('phone', False),
-                'contact_address': params.get('contact_address', False),
-            }
-            record = request.env['res.users'].sudo().create(data)
-            group_customer = request.env.ref('sgu_base.group_customer')
-            record.sudo().write({'groups_id': [(6, 0,[group_customer.id])]})
-            return http.Response(
-                json.dumps({"record_id": record.id}),
-                status=200,
-                mimetype='application/json'
-            )
-        except Exception as ex:
-            return http.Response(
-                json.dumps({
-                    "status": 'error',
-                    "message": ex
-                }),
-                status=500,
-                mimetype='application/json'
-            )
 
     @http.route(
         '/api/notauth/<string:model>', 
         auth='public', methods=['GET'], csrf=False)
     def get_model_data_not_auth(self, model, **params):
         records = request.env[model].search([])
+        rule_query = records.fields_get_keys()
+        if model == 'sgu.product':
+            rule_query = ["id", "name", "price", "image_url", "type", "on_hand", "color", "ram", "memory", "origin","vendor"]
+            
+
         if "query" in params:
             query = json.loads(params["query"])
+            set_query = set(query)
+            query = [list(set_query.intersection(set(rule_query)))]
         else:
-            query = [records.fields_get_keys()]
+            query = [rule_query]
 
         if "exclude" in params:
             exclude = json.loads(params["exclude"])
@@ -222,6 +202,7 @@ class OdooAPI(http.Controller):
             status=200,
             mimetype='application/json'
         )
+
 
 
     @http.route(
@@ -521,3 +502,109 @@ class OdooAPI(http.Controller):
             src
         )
 
+    @http.route(
+        '/api/order/checkout/', 
+        auth='public', methods=['POST'], website=True, type='json', csrf=False)
+    def order(self, **params):
+        try:
+            user = request.env['res.users'].sudo().search([
+                ('email', '=', request.jsonrequest.get('email'))
+            ])
+            if len(user) == 0:
+                data_user = {
+                    'email': request.jsonrequest.get('email'),
+                    'login': request.jsonrequest.get('email'),
+                    'name': request.jsonrequest.get('name'),
+                    'customer': True,
+                    'phone': request.jsonrequest.get('phone', False),
+                    'contact_address': request.jsonrequest.get('contact_address', False),
+                    'gender': request.jsonrequest.get('gender', 'male')
+                }
+                record = request.env['res.users'].sudo().create(data_user)
+                group_customer = request.env.ref('sgu_base.group_customer')
+                record.sudo().write({'groups_id': [(6, 0,[group_customer.id])]})
+                user = record
+            data_order = {
+                'customer': user.id,
+                'address': request.jsonrequest.get('contact_address'),
+                'phone': request.jsonrequest.get('phone'),
+                'payment_method': request.jsonrequest.get('payment_method'),
+            }
+            order = request.env['sgu.order'].sudo().create(data_order)
+            data_order_line = request.jsonrequest.get('order_lines')
+            for item in data_order_line:
+                item.update({
+                    'order_id': order.id
+                })
+                request.env['sgu.order.line'].sudo().create(item)
+            return {
+                "status": 'success', 
+                'code': order.name
+            }
+        except Exception as ex:
+            if ex:
+                http.Response.status = '400'
+            return {
+                    "status": 'error',
+                    "message": ex
+                }
+
+    @http.route(
+        '/api/tracking/<code_order>/<token>', 
+        auth='public', methods=['GET'], type='http', csrf=False)
+    def order_tracking(self, code_order, token, **params):
+        try:
+            order = request.env['sgu.order'].sudo().search([
+                ('name', '=', code_order),
+                ('token', '=', token)
+            ])
+            if len(order) == 1:
+                data_order = {
+                    'name': order.name,
+                    'customer_name': order.customer.name,
+                    'address': order.address,
+                    'phone': order.phone,
+                    'total': order.total,
+                    'state': order.state,
+                    'order_lines': []
+                }
+                for item in order.line_ids:
+                    data_order['order_lines'].append({
+                        'product': item.product_id.name,
+                        'price': item.price,
+                        'qty': item.qty,
+                        'sub_total': item.sub_total,
+                        'state': item.state,
+                        'description': item.description,
+                    })
+                return http.Response(
+                    json.dumps({"status": 'success', 'data': data_order}),
+                    status=200,
+                    mimetype='application/json'
+                )
+        except Exception as ex:
+            return http.Response(
+                json.dumps({
+                    "status": 'error',
+                    "message": ex
+                }),
+                status=400,
+                mimetype='application/json'
+            )
+    
+    def _send_email_template_order(self, customer):
+        su_id = self.env['res.partner'].browse(SUPERUSER_ID)
+        template_id = self.env['ir.model.data'].get_object_reference(
+                                'sgu_base',
+                                'template_email_order')[1]
+        if template_id:
+            self = self.with_context(today=date.today().strftime('%d-%m-%Y'))
+            email_template_obj = self.env['mail.template'].browse(template_id)
+            values = email_template_obj.generate_email(employee.id, fields=None)
+            values['email_from'] = su_id.email
+            values['email_to'] = customer.email
+            values['res_id'] = False
+            mail_mail_obj = self.env['mail.mail']
+            msg_id = mail_mail_obj.create(values)
+            if msg_id:
+                msg_id.send()

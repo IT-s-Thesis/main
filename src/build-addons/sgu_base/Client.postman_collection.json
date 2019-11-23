@@ -1,0 +1,114 @@
+{
+	"info": {
+		"_postman_id": "653ae0cd-c915-4a1a-b4c6-5774cbfa3fce",
+		"name": "Client",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "order checkout",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"email\": \"dinhdinh@gmail.com\",\n\t\"name\": \"dinh dinh\",\n\t\"phone\": \"2343534\",\n\t\"contact_address\": \"Vietnam\",\n\t\"gender\": \"male\",\n\t\"payment_method\": \"cod\",\n\t\"order_lines\": [\n\t\t{\n\t\t\t\"product_i5d\": 1,\n\t\t\t\"qty\": 1,\n\t\t\t\"description\": \"abc\"\n\t\t}\n\t]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "xboss.localhost/api/order/checkout/",
+					"host": [
+						"xboss",
+						"localhost"
+					],
+					"path": [
+						"api",
+						"order",
+						"checkout",
+						""
+					],
+					"query": [
+						{
+							"key": "csrf_token",
+							"value": "b56ddd3119a81bb9bb4619c36ba67d3986c1561ao",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "tracking order",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://xboss.localhost/api/tracking/<name_order>/<token>",
+					"protocol": "http",
+					"host": [
+						"xboss",
+						"localhost"
+					],
+					"path": [
+						"api",
+						"tracking",
+						"<name_order>",
+						"<token>"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Product search",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": ""
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "product list",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://xboss.localhost/api/notauth/sgu.product?query=[\"id\", \"name\"]",
+					"protocol": "http",
+					"host": [
+						"xboss",
+						"localhost"
+					],
+					"path": [
+						"api",
+						"notauth",
+						"sgu.product"
+					],
+					"query": [
+						{
+							"key": "query",
+							"value": "[\"id\", \"name\"]"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
