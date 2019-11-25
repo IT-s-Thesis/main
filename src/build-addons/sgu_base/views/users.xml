@@ -1,0 +1,73 @@
+<odoo>
+    <data>
+
+        <!-- res.users tree view -->
+        <record id="res_users_view_tree" model="ir.ui.view">
+            <field name="name">res.users.view.tree</field>
+            <field name="model">res.users</field>
+            <field name="arch" type="xml">
+                <tree string="Users" create="0" edit="0">
+                    <field name="name"/>
+                    <field name="login"/>
+                    <field name="lang"/>
+                    <field name="login_date"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- res.users form view -->
+        <record id="res_users_view_form" model="ir.ui.view">
+            <field name="name">res.users.view.form</field>
+            <field name="model">res.users</field>
+            <field name="arch" type="xml">
+                <form string="Users" create="0" edit="0">
+                    <header>
+                    </header>
+                    <sheet>
+                        <field name="id" invisible="1"/>
+                        <div class="oe_button_box" name="button_box">
+                            <button name="toggle_active" type="object" class="oe_stat_button" icon="fa-check">
+                                <field name="active" widget="boolean_button" options="{&quot;terminology&quot;: &quot;active&quot;}"/>
+                            </button>
+                        </div>
+                        <field name="active_partner" required="0" readonly="1" invisible="1"/>
+                        <div class="alert alert-info text-center o_form_header" attrs="{'invisible': [                                 '|', '|',                                 '&amp;', ('active', '=', True), ('active_partner', '=', True),                                 '&amp;', ('active', '=', False), ('active_partner', '=', False),                                 '&amp;', ('active', '=', True), ('active_partner', '=', False),                             ]}" role="alert">
+                          <a class="close" data-dismiss="alert" href="#">x</a>
+                          <div>
+                            <strong>The contact linked to this user is still active</strong>
+                          </div>
+                          <div>You can archive the contact
+                            <field name="partner_id" required="0" readonly="1"/>
+                          </div>
+                        </div>
+                        <field name="image" widget="image" class="oe_avatar" options="{&quot;preview_image&quot;: &quot;image_medium&quot;}"/>
+                        <div class="oe_title">
+                            <label for="name" class="oe_edit_only"/>
+                            <h1><field name="name" required="1"/></h1>
+                            <field name="email" invisible="1"/>
+                            <label for="login" class="oe_edit_only" string="Email Address"/>
+                            <h2><field name="login"/></h2>
+                            <group>
+                                <field name="partner_id" readonly="1" required="0" groups="base.group_no_one" attrs="{'invisible': [('id', '=', False)]}"/>
+                            </group>
+                        </div>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- res.users search view -->
+        <!-- <record id="res_users_view_search" model="ir.ui.view">
+            <field name="name">res.users.view.search</field>
+            <field name="model">res.users</field>
+            <field name="arch" type="xml">
+                <search string="Search Description">
+                    <field name="customer"/>
+                    <filter name="Customer" string="Customer" domain="[('customer','=',True)]"/> 
+                    <field name="employee"/>
+                    <filter name="employee" string="Employee" domain="[('employee','=',False)]"/> 
+                </search>
+            </field>
+        </record> -->
+    </data>
+</odoo>

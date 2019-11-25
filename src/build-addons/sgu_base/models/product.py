@@ -32,11 +32,20 @@ class Product(models.Model):
     delivery_line_ids = fields.One2many('sgu.delivery.order', 'product_id', 'Delivery order')
     qty_delivery = fields.Integer('Qty Delivery', compute="_compute_qty_delivery")
     type = fields.Selection([('service', 'Service'), ('store', 'Store')], 'Type Product')
+
     color = fields.Char('Color')
     ram = fields.Char('Ram')
     memory = fields.Char('Memory')
     origin = fields.Char('Origin')
     vendor = fields.Char('Vendor')
+    screen = fields.Char('Screen')
+    osystem = fields.Char('Operate System')
+    camera = fields.Char('Camera')
+    cpu = fields.Char('CPU')
+    pin = fields.Char('PIN')
+
+
+    category_id = fields.Many2one('sgu.category', 'Category')
     public_website = fields.Boolean('Public website', default=False)
 
     @api.multi
@@ -117,3 +126,11 @@ class Product(models.Model):
             'domain': [('id', 'in', delivery_ids)],
             'type': 'ir.actions.act_window',
         }
+
+
+class Categroy(models.Model):
+    _name = 'sgu.category'
+    _description = 'Category'
+
+
+    name = fields.Char('Name')

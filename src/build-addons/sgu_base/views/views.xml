@@ -31,11 +31,24 @@
             
         </record>
     
+        <!-- res.users action window -->
+        <record id="res_users_action" model="ir.actions.act_window">
+            <field name="name">Users</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">res.users</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_type">form</field>
+            <field name="view_ids" eval="[(5, 0, 0),
+                (0, 0, {'view_mode': 'tree', 'view_id': ref('sgu_base.res_users_view_tree')}),
+                (0, 0, {'view_mode': 'form', 'view_id': ref('sgu_base.res_users_view_form')}),
+                ]"/>
+        </record>
 
         <!-- This Menu Item must have a parent and an action -->
         <menuitem id="order_menu_manager_act" name="Order" groups="sgu_base.group_manager" web_icon="sgu_base,static/description/order.png" action="sgu_order_action" sequence="60"/>
         <menuitem id="order_menu_employee_act" name="Order" groups="sgu_base.group_employee" web_icon="sgu_base,static/description/order.png" action="sgu_order_action" sequence="60"/>
         <menuitem id="delivery_menu_act" name="Delivery" web_icon="sgu_base,static/description/delivery.png" action="sgu_delivery_action" sequence="70"/>
         <menuitem id="product_menu_act" name="Product" web_icon="sgu_base,static/description/product.png" action="sgu_product_action" sequence="50"/>
+        <menuitem id="res_users_menu_act" name="Users" groups="sgu_base.group_manager" web_icon="sgu_base,static/description/employee.png" action="res_users_action" sequence="40"/>
     </data>
 </odoo>

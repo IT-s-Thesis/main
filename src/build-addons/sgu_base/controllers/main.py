@@ -4,11 +4,14 @@ import math
 import logging
 import requests
 import datetime
+from datetime import date
 from odoo import SUPERUSER_ID
 
 from odoo import http
 from odoo.http import request
 from odoo.exceptions import ValidationError, UserError
+
+from odoo.http import JsonRequest
 
 _logger = logging.getLogger(__name__)
 
@@ -97,7 +100,7 @@ class SguBase(http.Controller):
 
     @http.route('/object/<string:model>/<string:function>', 
         type='json', auth='public',
-        methods=["POST"], csrf=False, sitemap=False)
+        methods=["POST"], csrf=False, cors="*", sitemap=False)
     def call_model_function(self, model, function, **post):
         args = []
         kwargs = {}
@@ -110,7 +113,7 @@ class SguBase(http.Controller):
         return result
 
     @http.route('/object/<string:model>/<int:rec_id>/<string:function>', 
-        type='json', auth='public',
+        type='json', auth='public', cors="*",
         methods=["POST"], csrf=False, sitemap=False)
     def call_obj_function(self, model, rec_id, function, **post):
         args = []
@@ -126,14 +129,16 @@ class SguBase(http.Controller):
 
     @http.route(
         '/api/notauth/<string:model>', 
-        auth='public', methods=['GET'], csrf=False)
+        auth='public', cors="*", methods=['GET'], csrf=False)
     def get_model_data_not_auth(self, model, **params):
         records = request.env[model].search([])
         rule_query = records.fields_get_keys()
         if model == 'sgu.product':
-            rule_query = ["id", "name", "price", "image_url", "type", "on_hand", "color", "ram", "memory", "origin","vendor"]
-            
-
+            rule_query = ["id", "name", "price", 
+                "image_url", "type", "on_hand", "color", 
+                "ram", "memory", "origin","vendor", "screen", 
+                "osystem", "camera", "cpu", "pin", "category_id"]
+        
         if "query" in params:
             query = json.loads(params["query"])
             set_query = set(query)
@@ -207,7 +212,7 @@ class SguBase(http.Controller):
 
     @http.route(
         '/api/<string:model>', 
-        auth='user', methods=['GET'], csrf=False)
+        auth='user', methods=['GET'], cors="*", csrf=False)
     def get_model_data(self, model, **params):
         records = request.env[model].search([])
         if "query" in params:
@@ -279,7 +284,7 @@ class SguBase(http.Controller):
 
     @http.route(
         '/api/<string:model>/<int:rec_id>',
-        auth='user', methods=['GET'], csrf=False)
+        auth='user', methods=['GET'], cors="*", csrf=False)
     def get_model_rec(self, model, rec_id, **params):
         records = request.env[model].search([])
         if "query" in params:
@@ -311,7 +316,7 @@ class SguBase(http.Controller):
     @http.route(
         '/api/<string:model>/', 
         type='json', auth="user", 
-        methods=['POST'], website=True, csrf=False)
+        methods=['POST'], cors="*", website=True, csrf=False)
     def post_model_data(self, model, **post):
         try:
             data = post['data']
@@ -491,7 +496,7 @@ class SguBase(http.Controller):
     @http.route(
         '/api/<string:model>/<int:rec_id>/<string:field>', 
         type='http', auth="user", 
-        methods=['GET'], website=True, csrf=False)
+        methods=['GET'], website=True, cors="*", csrf=False)
     def get_binary_record(self, model,  rec_id, field, **post):
         rec = request.env[model].browse(rec_id).ensure_one()
         if rec.exists():
@@ -504,10 +509,11 @@ class SguBase(http.Controller):
 
     @http.route(
         '/api/order/checkout/', 
-        auth='public', methods=['POST'], website=True, type='json', csrf=False)
+        auth='public', methods=['POST'], cors="*", website=True, type='json', csrf=False)
     def order(self, **params):
         try:
             user = request.env['res.users'].sudo().search([
+
                 ('email', '=', request.jsonrequest.get('email'))
             ])
             if len(user) == 0:
@@ -551,7 +557,7 @@ class SguBase(http.Controller):
 
     @http.route(
         '/api/tracking/<code_order>/<token>', 
-        auth='public', methods=['GET'], type='http', csrf=False)
+        auth='public', methods=['GET'], cors="*", type='http', csrf=False)
     def order_tracking(self, code_order, token, **params):
         try:
             order = request.env['sgu.order'].sudo().search([
@@ -580,7 +586,11 @@ class SguBase(http.Controller):
                 return http.Response(
                     json.dumps({"status": 'success', 'data': data_order}),
                     status=200,
-                    mimetype='application/json'
+                    mimetype='application/json',
+                    headers={
+                        "Access-Control-Allow-Origin": "*",
+                        "Access-Control-Allow-Methods": "GET"
+                    }
                 )
         except Exception as ex:
             return http.Response(
@@ -600,7 +610,7 @@ class SguBase(http.Controller):
         if template_id:
             self = self.with_context(today=date.today().strftime('%d-%m-%Y'))
             email_template_obj = self.env['mail.template'].browse(template_id)
-            values = email_template_obj.generate_email(employee.id, fields=None)
+            values = email_template_obj.generate_email(customer.id, fields=None)
             values['email_from'] = su_id.email
             values['email_to'] = customer.email
             values['res_id'] = False

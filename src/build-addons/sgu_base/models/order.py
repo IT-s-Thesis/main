@@ -12,14 +12,9 @@ class Order(models.Model):
     _inherit = ['mail.thread', 'mail.activity.mixin']
     _rec_name = 'name'
 
-    @api.model
-    def _default_token(self):
-        chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
-        for record in self:
-            record.code_active = ''.join(random.SystemRandom().choice(chars) for _ in range(6))
 
     name = fields.Char('Name')
-    token = fields.Char('Token', default=_default_token)
+    token = fields.Char('Token')
     customer = fields.Many2one('res.users', 'Customer', domain=lambda self: self.get_domain())
     address = fields.Char('Customer Address')
     phone = fields.Char('Customer Phone')
@@ -93,11 +88,15 @@ class Order(models.Model):
             },
         }
 
-
+    def _default_token(self):
+        chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
+        return ''.join(random.SystemRandom().choice(chars) for _ in range(6))
+        
     @api.model
     def create(self, vals):
         if vals.get('name', _('New')) == _('New'):
             vals['name'] = self.env['ir.sequence'].next_by_code('sgu_base.order') or _('New')
+        vals['token'] = self._default_token()
         return super(Order, self).create(vals)
 
     @api.multi

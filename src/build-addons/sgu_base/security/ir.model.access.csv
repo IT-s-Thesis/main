@@ -1,4 +1,5 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_sgu_category,sgu_base.sgu_category,model_sgu_category,,1,1,1,1
 access_sgu_product,sgu_base.sgu_product,model_sgu_product,,1,0,0,0
 access_sgu_product_manager,sgu_base.sgu_product,model_sgu_product,group_manager,1,1,1,1
 

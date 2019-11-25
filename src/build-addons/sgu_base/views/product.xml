@@ -56,16 +56,33 @@
 							<group>
 								<field name="price" required="1"/>
 								<field name="type" required="1"/>
-								<field name="origin" />
-								<field name="vendor"/>
+								
 							</group>
 							<group>
-								<field name="color" widget="colorpicker"/>
-								<field name="ram" />
-								<field name="memory" />
+								<field name="category_id"/>
 								<field name="public_website" groups="sgu_base.group_manager" />
 							</group>
 						</group>
+						<notebook>
+							<page string="Specifications" name="specifications">
+								<group>
+									<group>
+										<field name="color" widget="colorpicker"/>
+										<field name="ram" />
+										<field name="memory" />
+										<field name="screen"/>
+										<field name="camera"/>
+										<field name="pin"/>
+									</group>
+									<group>
+										<field name="origin" />
+										<field name="vendor"/>
+										<field name="cpu"/>
+										<field name="osystem"/>
+									</group>
+								</group>
+							</page>
+						</notebook>
 					</sheet>
 					<div class="oe_chatter">
                         <field name="message_follower_ids" widget="mail_followers"/>

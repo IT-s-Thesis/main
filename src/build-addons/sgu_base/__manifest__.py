@@ -21,9 +21,7 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    # 'depends': ['base', 'sale', 'stock', 'contacts', 'purchase', 'employee'],
-    # 'depends': ['base', 'mail', 'muk_web_theme', 'tgl_format_number', 'odoo-rest-api'],
-    'depends': ['base', 'mail'],
+    'depends': ['base', 'mail', 'muk_web_theme', 'tgl_format_number'],
     
     # always loaded
     'data': [
@@ -31,13 +29,14 @@
         'security/ir.model.access.csv',
         'security/record_rule.xml',
         'data/ir_sequence_data.xml',
-        'views/views.xml',
 
         'wizard/adjust_product_view.xml',
         'wizard/comback_view.xml',
+        'views/users.xml',
         'views/product.xml',
         'views/order.xml',
         'views/delivery.xml',
+        'views/views.xml',
     ],
     'installable': True,
     'auto_install': True,
