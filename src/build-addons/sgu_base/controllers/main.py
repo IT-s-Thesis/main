@@ -509,7 +509,7 @@ class SguBase(http.Controller):
 
     @http.route(
         '/api/order/checkout/', 
-        auth='public', methods=['POST'], cors="*", website=True, type='json', csrf=False)
+        auth='public', methods=['POST', 'OPTIONS'], cors="*", website=True, type='json', csrf=False)
     def order(self, **params):
         try:
             user = request.env['res.users'].sudo().search([
@@ -586,11 +586,7 @@ class SguBase(http.Controller):
                 return http.Response(
                     json.dumps({"status": 'success', 'data': data_order}),
                     status=200,
-                    mimetype='application/json',
-                    headers={
-                        "Access-Control-Allow-Origin": "*",
-                        "Access-Control-Allow-Methods": "GET"
-                    }
+                    mimetype='application/json'
                 )
         except Exception as ex:
             return http.Response(
