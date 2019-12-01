@@ -4,24 +4,26 @@
 
     <record id="template_email_order" model="mail.template">
         <field name="name">My Sale Order</field>
-        <field name="model_id" ref="hr.model_hr_employee"/>
+        <field name="model_id" ref="sgu_base.model_sgu_order"/>
         <field name="subject">Xác nhận đơn hàng: ${ctx['today']}</field>
-        <field name="email_to">${( object.email ) | safe}</field>
-        <field name="partner_to">${object.user_id.partner_id.id or ''}</field>
+        <field name="email_to">${( object.customer.email ) | safe}</field>
+        <field name="partner_to">${object.customer.partner_id.id or ''}</field>
         <field name="body_html" type="html">
 <table border="0" cellpadding="0" cellspacing="0" width="590" style="background-color: white; border-collapse: collapse; margin-left: 20px;">
     <tr>
         <td valign="top" style="padding: 0px 10px;">
             <div style="font-size: 13px; margin: 0px; padding: 0px;">
-                Xin chào, ${object.name | safe}
+                Xin chào, ${object.customer.name | safe}
                 <br/><br/>
                 Đơn hàng ngày ${ctx['today']} của bạn đã dược tạo thành công.<br/>
-                Thông tin chi tiết đơn hàng bên dưới.
+                Thông tin chi tiết đơn hàng bên dưới.<br/>
+                Mã đơn hàng: <code>${object.name | safe}</code><br/>
+                Token: <code>${object.token | safe}</code><br/>
                 <br/><br/>
                 Liên hệ nhân viên bán hàng: 0932 xxx xxx
 
                 <div style="margin: 16px 8px 16px 8px;">
-                    <a href="/web/request_attendance"
+                    <a href="http://client.manager/order"
                         style="background-color: #875a7b; text-decoration: none; color: #fff; padding: 8px 16px 8px 16px; border-radius: 5px;">Thông tin đơn hàng</a>
                 </div>
             </div>
@@ -30,7 +32,7 @@
 </table></field>
         <field name="user_signature" eval="False"/>
         <field name="auto_delete" eval="True"/>
-        <field name="lang">${object.user_id.partner_id.lang or ''}</field>
+        <field name="lang">${object.customer.partner_id.lang or ''}</field>
     </record>
 
 </data>

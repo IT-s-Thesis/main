@@ -1,0 +1,14 @@
+<odoo>
+	<data>
+
+		<report 
+			id="action_print_sale_order"
+			model="sgu.order"
+			string="Print Sale Order"
+			report_type="qweb-pdf"
+			print_report_name="'Sale Order - %s' % (object.name)"
+			name="sgu_base.report_sale_order"
+			file="sgu_base.sale_order"
+			menu="True" />
+	</data>
+</odoo>

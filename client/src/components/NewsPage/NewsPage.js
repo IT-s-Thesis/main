@@ -33,7 +33,7 @@ class NewsPage extends Component {
                                     <Link to="/"><img src="/img/news/news-1.png" alt="" className="w-100" /></Link>
                                 </div>
                                 <div className="news-Info">
-                                    <Link><h4>Cách xử lý điện thoại khi rơi xuống nước</h4></Link>
+                                    <Link to="/"><h4>Cách xử lý điện thoại khi rơi xuống nước</h4></Link>
                                     <p>Hầu như dòng điện thoại cao cấp đều sở hữu tính năng chống nước. Thế nhưng, đối với các dòng điện thoại phổ thông
                                          thì tính năng này vẫn chưa được trang bị phổ biến. Vậy phải xử lý như thế nào khi những chiếc "dế yêu"</p>
                                     <p className="text-muted">1 ngày trước</p>
@@ -44,7 +44,7 @@ class NewsPage extends Component {
                                     <Link to="/"><img src="/img/news/news-2.png" alt="" className="w-100" /></Link>
                                 </div>
                                 <div className="news-Info">
-                                    <Link><h4>Cách xử lý điện thoại khi rơi xuống nước</h4></Link>
+                                    <Link to=""><h4>Cách xử lý điện thoại khi rơi xuống nước</h4></Link>
                                     <p>Hầu như dòng điện thoại cao cấp đều sở hữu tính năng chống nước. Thế nhưng, đối với các dòng điện thoại phổ thông
                                          thì tính năng này vẫn chưa được trang bị phổ biến. Vậy phải xử lý như thế nào khi những chiếc "dế yêu"</p>
                                     <p className="text-muted">1 ngày trước</p>
@@ -55,7 +55,7 @@ class NewsPage extends Component {
                                     <Link to="/"><img src="/img/news/news-3.png" alt="" className="w-100" /></Link>
                                 </div>
                                 <div className="news-Info">
-                                    <Link><h4>Cách xử lý điện thoại khi rơi xuống nước</h4></Link>
+                                    <Link to=""><h4>Cách xử lý điện thoại khi rơi xuống nước</h4></Link>
                                     <p>Hầu như dòng điện thoại cao cấp đều sở hữu tính năng chống nước. Thế nhưng, đối với các dòng điện thoại phổ thông
                                          thì tính năng này vẫn chưa được trang bị phổ biến. Vậy phải xử lý như thế nào khi những chiếc "dế yêu"</p>
                                     <p className="text-muted">1 ngày trước</p>

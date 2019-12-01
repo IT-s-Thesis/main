@@ -217,7 +217,7 @@ nav  {
     margin-left: 14px;
 }
 .product-img {
-    height: 180px;
+    height: 220px;
     transition: 0.7s;
     transform: scale(0.9);
 }
@@ -446,7 +446,8 @@ footer .copy-right p {
 }
 
 .category-list img {
-    width: 100%;
+    width: 160px;
+    height: 60px;
 }
 .choose-price {
     display: flex;
@@ -458,12 +459,13 @@ footer .copy-right p {
 .choose-price .price-list {
     width: 60%;
 }
-.price-list a{
+.price-list p{
     color: #1357f5b3;
     font-weight: 600;
     display: inline-block;
     margin-top: 2px;
     margin-right: 10px;
+    cursor: pointer;
 }
 .product-category-list .product-img {
     height: 220px;

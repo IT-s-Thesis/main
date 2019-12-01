@@ -3,7 +3,6 @@ import TopDetails from "./TopDetails";
 import LeftDetails from "./LeftDetails";
 import RightDetails from "./RightDetails";
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
 import { actFetchDetailsProductRequest } from '../../actions/index';
 class DetailsProduct extends Component {
 
@@ -16,17 +15,18 @@ class DetailsProduct extends Component {
         }
     }
     render() {
+        
         return (
             <div className="details-page white-background">
-                <div className="container">
-                    <nav className="breadcrumb">
+                <div className="container pt-4">
+                    {/* <nav className="breadcrumb">
                         <Link className="breadcrumb-item" to="/">Trang chủ</Link>
                         <Link className="breadcrumb-item" to="/">Điện thoại</Link>
                         <Link className="breadcrumb-item" to="/">Iphone</Link>
                         <span className="breadcrumb-item active">{this.props.details.product_name}</span>
-                    </nav>
+                    </nav> */}
                 </div>
-                <TopDetails />
+                <TopDetails history ={this.props.history} />
                 <div className="container details-product-info mt-4">
                     <div className="row">
                         <LeftDetails />

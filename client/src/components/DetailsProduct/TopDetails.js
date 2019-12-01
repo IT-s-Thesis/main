@@ -1,19 +1,79 @@
 import React, { Component } from "react";
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { addToCart } from '../../actions/index';
 class TopDetails extends Component {
 
+    onAddToCart = (product) => {
+        let $ = window.$;
+        if (this.props.details.on_hand > 0) {
+            this.props.onAddToCart(product);
+            $('#conhang').modal('show');
+        }
+        else {
 
+            $('#hethang').modal('show');
+        }
+    }
+    goCart = () => {
+        this.props.history.push('/cart')
+    }
+    componentDidMount() {
+        window.scrollTo(0, 0);
+    }
     render() {
-        const { product_name, product_img, product_price } = this.props.details;
+        
+        const { name, image_url, price, on_hand } = this.props.details;
+        const img = `http://web.manager${image_url}`;
         return (
             <div className="container details-product">
+                <div className="modal" id="hethang">
+                    <div className="modal-dialog">
+                        <div className="modal-content">
+
+                            <div className="modal-header">
+                                <h4 className="modal-title">Thông Báo</h4>
+                                <button type="button" className="close" data-dismiss="modal">&times;</button>
+                            </div>
+
+                            <div className="modal-body">
+                                Điện thoại này hiện tạm hết hàng, vui lòng quay lại sau. Xin cảm ơn !
+      </div>
+
+                            <div className="modal-footer">
+                                <button type="button" className="btn btn-danger" data-dismiss="modal">Đóng</button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div className="modal" id="conhang">
+                    <div className="modal-dialog">
+                        <div className="modal-content">
+
+                            <div className="modal-header">
+                                <h4 className="modal-title">Thông Báo</h4>
+                                <button type="button" className="close" data-dismiss="modal">&times;</button>
+                            </div>
+
+                            <div className="modal-body">
+                                Điện thoại đã được thêm vào giỏ hàng thành công. Xin cảm ơn !
+      </div>
+
+                            <div className="modal-footer">
+                                <button type="button" className="btn btn-info" data-dismiss="modal" onClick={() => this.goCart()}>Vào Giỏ Hàng</button>
+                                <button type="button" className="btn btn-danger" data-dismiss="modal">Đóng</button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
                 <div className="product-name">
-                    <h3>Điện thoại {product_name}</h3>
+                    <h3>Điện thoại {name}</h3>
                 </div>
                 <div className="row border-bottom">
                     <div className="col-md-4">
-                        <img src={product_img} className="w-100" alt="" />
+                        <img src={img} className="w-100" alt="" />
                         <div className="details-option text-center m-3">
                             <div className="box-details" data-toggle="modal" data-target="#openAccessoriesBox">
                                 <img src="img/detail/open-box.png" alt="" />
@@ -61,11 +121,11 @@ class TopDetails extends Component {
                         </div>
                     </div>
                     <div className="col-md-5">
-                        <div className="float-right pt-1">Còn hàng</div>
+                        <div className="float-right pt-1 product-name">{on_hand > 0 ? "Còn Hàng" : "Hết Hàng"}</div>
                         <div className="product-price">
-                            <h4>{product_price}đ</h4>
+                            <h4>{price}đ</h4>
                         </div>
-                        <div className="choose-colors">
+                        {/* <div className="choose-colors">
                             <p>Bạn đang xem phiên bản: <b>Đỏ</b></p>
                             <div className="colors-list">
                                 <div className="product-color text-center active">
@@ -81,7 +141,7 @@ class TopDetails extends Component {
                                     <p className="product-price">7.290.000đ</p>
                                 </div>
                             </div>
-                        </div>
+                        </div> */}
                         <div className="details-promotion mt-3">
                             <p className="text-uppercase font-weight-bold">Khuyến mãi</p>
                             <div className="promotion-list">
@@ -91,12 +151,11 @@ class TopDetails extends Component {
                             </div>
                         </div>
                         <div className="product-buy text-center mt-3">
-                            <Link to="/cart">
-                                <button type="button" className="btn btn-buy">
-                                    <p className="text-uppercase font-weight-bold">Mua ngay</p>
-                                    <p>Giao hàng miễn phí</p>
-                                </button>
-                            </Link>
+
+                            <button type="button" className="btn btn-buy" onClick={() => this.onAddToCart(this.props.details)}>
+                                <p className="text-uppercase font-weight-bold">Mua ngay</p>
+                                <p>Giao hàng miễn phí</p>
+                            </button>
                             {/* <button type="button" className="btn btn-installment">
                                 <p className="text-uppercase font-weight-bold">Trả góp</p>
                                 <p>Xét duyệt qua điện thoại</p>
@@ -138,7 +197,9 @@ const mapStateToProps = state => {
 }
 const mapDispatchToProps = (dispatch) => {
     return {
-
+        onAddToCart: (product) => {
+            dispatch(addToCart(product, 1));
+        },
     }
 }
 

@@ -3,7 +3,7 @@ import CategoryFilter from "./CategoryFilter";
 import CategoryProductList from "./CategoryProductList";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom"; 
 class Category extends Component {
-
+   
     render() {
         return (
                 <div className="category-page">

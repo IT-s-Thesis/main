@@ -41,12 +41,12 @@ class Footer extends Component {
                   </div>
                             <div className="footer-item">
                                 <div className="paypal d-flex">
-                                    <Link to="/"><img src="img/paypal.png" alt="" /></Link>
-                                    <Link to="/"><img src="img/atm.png" alt="" /></Link>
-                                    <Link to="/"><img src="img/master.png" alt="" /></Link>
+                                    <Link to="/"><img src="/img/paypal.png" alt="" /></Link>
+                                    <Link to="/"><img src="/img/atm.png" alt="" /></Link>
+                                    <Link to="/"><img src="/img/master.png" alt="" /></Link>
                                 </div>
                                 <div className="certificate">
-                                    <Link to="/"><img src="img/congthuong.png" alt="" /></Link>
+                                    <Link to="/"><img src="/img/congthuong.png" alt="" /></Link>
                                 </div>
                                 <div className="social-media">
                                     <Link to="/"><i className="fab fa-facebook" /> <span>Fanpage của Website</span></Link>

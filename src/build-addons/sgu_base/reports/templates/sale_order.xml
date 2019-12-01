@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="report_sale_order">
+        <t t-call="web.basic_layout">
+            <t t-if="not o" t-set="o" t-value="doc"/>
+
+            <t t-if="not company">
+                <!-- Multicompany -->
+                <t t-if="company_id">
+                    <t t-set="company" t-value="company_id"/>
+                </t>
+                <t t-elif="o and 'company_id' in o">
+                    <t t-set="company" t-value="o.company_id.sudo()"/>
+                </t>
+                <t t-else="else">
+                    <t t-set="company" t-value="res_company"/>
+                </t>
+            </t>
+            
+            <div class="header">
+                <div class="row">
+                    <div class="col-3 mb4">
+                        <img t-if="company.logo" t-att-src="image_data_uri(company.logo)" style="max-height: 95px;" alt="Logo"/>
+                    </div>
+                    <div class="col-9 text-right" name="company_address">
+                        <div t-field="company.partner_id"
+                            t-options='{"widget": "contact", "fields": ["address", "name"], "no_marker": true}'
+                        />
+                    </div>
+                </div>
+                <div t-if="company.logo or company.report_header" class="row zero_min_height">
+                    <div class="col-12">
+                        <div style="border-bottom: 1px solid black;"/>
+                    </div>
+                </div>
+            </div>
+            <div class="page">
+                <h2 class="text-center mb32">Hóa đơn bán hàng</h2>
+                <h4 class="text-center mb32"><t t-esc="docs.name"/></h4>
+
+                <div class="row">
+                    <div class="col-6">
+                        <strong>Khách hàng : </strong><t t-esc="docs.customer.name"/><br/>
+                        <strong>Địa chỉ : </strong><t t-esc="docs.address"/><br/>
+                        <strong>Điện thoại : </strong><t t-esc="docs.phone"/><br/>
+                    </div>
+                    <div class="col-6">
+                        <strong>Nhân viên: </strong><t t-esc="docs.saleperson.name"/><br/>
+                        <strong>Phương thức thanh toán : </strong><t t-esc="docs.payment_method"/><br/>
+                        <strong>Trạng thái  : </strong><t t-esc="docs.state"/><br/>
+                    </div>
+                </div>
+
+                <br />
+                <br />
+                <br />
+                <table class="table table-striped table_report_attendances text-center">
+                    <thead>
+                        <tr>
+                            <th>Sản phẩm</th>
+                            <th>Giá</th>
+                            <th>Số lượng</th>
+                            <th>Tổng</th>
+                            <th>Trạng thái</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <t t-foreach="docs.line_ids" t-as="item">
+                        <tr>
+                            <td class="text-center">
+                                <t t-esc="item.product_id.name" />
+                            </td>
+                            <td class="text-center">
+                                <t t-esc="item.price" />
+                            </td>
+                            <td class="text-center">
+                                <t t-esc="item.qty" />
+                            </td>
+                            <td class="text-center">
+                                <t t-esc="item.sub_total" />
+                            </td>
+                            <td class="text-center">
+                                <t t-esc="item.state" />
+                            </td>
+                        </tr>
+                    </t>
+                    <t t-if="docs.state == 'done'">
+                        <tr>
+                            <td colspan="2"></td>
+                            <td class="text-center">Đã thanh toán</td>
+                        </tr>
+                    </t>
+                    <tr>
+                        <td colspan="2"></td>
+                        <td>Tổng cộng</td>
+                        <td class="text-center"><t t-esc="docs.total"/></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </t>
+    </template>
+</odoo>

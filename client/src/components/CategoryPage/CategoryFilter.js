@@ -1,31 +1,66 @@
 import React, { Component } from "react";
 import { connect } from 'react-redux';
-import { actFetchProductsRequest, actFetchCategoriesRequest, actFilterCategory } from '../../actions/index';
+import axios from 'axios';
+import { actFetchProductsRequest, actFetchCategoriesRequest, actFilterCategory, actFilterPrice } from '../../actions/index';
 import { Link } from "react-router-dom";
 class CategoryFilter extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            price: false,
+            priceList: "",
+        };
+    }
     componentDidMount() {
+        window.scrollTo(0, 0);
         this.props.fetchAllProducts();
         this.props.fetchAllCategories();
     }
     onFilterCategory = (cate) => {
         this.props.onFilterCategory(cate);
     }
+    onFilterPrice = (price) => {
+        axios.get(`http://web.manager/api/notauth/sgu.product?filter=${price}`)
+            .then((response) => {
+                this.props.onFilterPrices(response.data.result);
+            })
+            .catch(function (error) {
+                console.log(error);
+            })
+    }
     render() {
         const { categories } = this.props;
-
-        var categoriesList = "";
+      var categoriesList = "";
         if (categories) {
             categoriesList = categories.map((category, index) => {
+
+                // console.log(category)
                 return (
                     <Link
-                        to={`/category/${category.category_name}`}
+                        to={`/category/${category.id}`}
                         onClick={() => this.onFilterCategory(category.id)}
                         key={index} className="border" >
-                        <img src={category.category_image} alt="" />
+                            <img alt="" className="cate-img" src={`/img/category/${category.display_name}.png`} />
                     </Link>
                 )
 
             });
+        }
+        if(this.state.priceList.length > 0) {
+            // categoriesList = categories.map((category, index) => {
+
+            //     // console.log(category)
+            //     return (
+            //         <Link
+            //             to={`/category/${category.display_name}`}
+            //             onClick={() => this.onFilterCategory(category.id)}
+            //             key={index} className="border" >
+            //             <p>{category.display_name}</p>
+            //             <img src={category.category_image} alt="" />
+            //         </Link>
+            //     )
+
+            // });
         }
         return (
 
@@ -36,12 +71,13 @@ class CategoryFilter extends Component {
                 </div>
                 <div className="choose-price mb-3">
                     <span className="font-weight-bold">Chọn mức giá:</span>
-                    <div className="price-list">
-                        <Link to="/">Dưới 2 triệu</Link>
-                        <Link to="/">Từ 2 - 4 triệu</Link>
-                        <Link to="/">Từ 4 - 8 triệu</Link>
-                        <Link to="/">Từ 8 - 15 triệu</Link>
-                        <Link to="/">Trên 15 triệu</Link>
+                    <div className="price-list price-choice">
+                        <p to="/" onClick={() => this.onFilterPrice('[["price", ">","0"]]')}>Tất cả</p>
+                        <p to="/" onClick={() => this.onFilterPrice('["*", ["price", ">","0"], ["price", "<", "2000001"]]')}>Dưới 2 triệu</p>
+                        <p to="/" onClick={() => this.onFilterPrice('["*", ["price", ">","2000000"], ["price", "<", "4000001"]]')}>Từ 2 - 4 triệu</p>
+                        <p to="/" onClick={() => this.onFilterPrice('["*", ["price", ">","4000000"], ["price", "<", "8000001"]]')}>Từ 4 - 8 triệu</p>
+                        <p to="/" onClick={() => this.onFilterPrice('["*", ["price", ">", "8000000"], ["price", "<", "15000001"]]')}>Từ 8 - 15 triệu</p>
+                        <p to="/" onClick={() => this.onFilterPrice('["*", ["price", ">","15000000"], ["price", "<", "100000000"]]')}>Trên 15 triệu</p>
                     </div>
                     <div className="filter">
                         <select className="form-control">
@@ -81,6 +117,9 @@ const mapDispatchToProps = (dispatch) => {
         onFilterCategory: (cate) => {
             dispatch(actFilterCategory(cate));
         },
+        onFilterPrices: (price) => {
+            dispatch(actFilterPrice(price));
+        }
     }
 }
 

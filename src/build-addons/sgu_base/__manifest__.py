@@ -29,6 +29,10 @@
         'security/ir.model.access.csv',
         'security/record_rule.xml',
         'data/ir_sequence_data.xml',
+        'data/template_email.xml',
+
+        'reports/templates/sale_order.xml',
+        'reports/reports.xml',
 
         'wizard/adjust_product_view.xml',
         'wizard/comback_view.xml',

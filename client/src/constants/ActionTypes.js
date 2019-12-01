@@ -1,5 +1,14 @@
 export const FETCH_PRODUCTS = 'FETCH_PRODUCTS';
 export const FETCH_CATEGORIES = 'FETCH_CATEGORIES';
 export const FILTER_BY_CATEGORY = 'FILTER_BY_CATEGORY';
+export const FILTER_BY_PRICE = 'FILTER_BY_PRICE';
 
-export const GET_DETAILS_PRODUCT = 'GET_DETAILS_PRODUCT';
+export const GET_DETAILS_PRODUCT = 'G   ET_DETAILS_PRODUCT';
+export const ADD_TO_CART = "ADD_TO_CART";
+export const CHANGE_MSG = "CHANGE_MSG";
+export const DELETE_CART_ITEM = "DELETE_CART_ITEM";
+export const UPDATE_CART_ITEM = "UPDATE_CART_ITEM";
+export const ADD_ORDER = 'ADD_ORDER';
+export const CHECK_ORDER = 'CHECK_ORDER';
+
+export const SEARCH = 'SEARCH';

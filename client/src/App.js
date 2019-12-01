@@ -7,6 +7,7 @@ import Home from "./components/HomePage/Home";
 import Category from "./components/CategoryPage/Category";
 import DetailsProduct from "./components/DetailsProduct/DetailsProduct";
 import CartPage from "./components/CartPage/CartPage";
+import OrderPage from "./components/OrderPage/OrderPage";
 import NewsPage from "./components/NewsPage/NewsPage";
 import SearchPage from "./components/SearchPage/SearchPage";
 import AccessoriesPage from "./components/AccessoriesPage/AccessoriesPage";
@@ -23,6 +24,7 @@ class App extends Component {
           <Route path="/category" match component={Category} />
           <Route path="/details-:id" match component={DetailsProduct} />
           <Route path="/cart" match component={CartPage} />
+          <Route path="/order" match component={OrderPage} />
           <Route path="/accessories" component={AccessoriesPage} />
           <Route path="/news" component={NewsPage} />
           <Route path="/search" component={SearchPage} />

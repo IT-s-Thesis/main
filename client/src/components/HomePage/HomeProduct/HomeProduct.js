@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import HotProduct from "./HotProduct";
+// import HotProduct from "./HotProduct";
 import ProductList from "./ProductList";
-import HomeAccessories from "./HomeAccessories";
+// import HomeAccessories from "./HomeAccessories";
 import { connect } from 'react-redux';
 import { actFetchProductsRequest, actFetchCategoriesRequest } from '../../../actions/index';
 
@@ -19,7 +19,7 @@ class HomeProduct extends Component {
                 return (
                     <ProductList
                         key={index}
-                        category = {category.category_name}
+                        category = {category.name}
                         categoryId = {category.id}
                     />
                 );
@@ -28,9 +28,9 @@ class HomeProduct extends Component {
         return (
             <div className="container ">
                 <div className="row p-0">
-                    <HotProduct />
+                    {/* <HotProduct /> */}
                     {categoriesList}
-                    <HomeAccessories />
+                    {/* <HomeAccessories /> */}
                 </div>
             </div>
         );

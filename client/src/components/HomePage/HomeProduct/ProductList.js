@@ -2,9 +2,11 @@ import React, { Component } from "react";
 import { connect } from 'react-redux';
 import ProductItem from "./ProductItem";
 import { Link } from 'react-router-dom';
-// import { actFetchProductsRequest } from '../../../actions/index';
+import { actFilterCategory } from '../../../actions/index';
 class ProductList extends Component {
-
+    onFilterCategory = (cate) => {
+        this.props.onFilterCategory(cate);
+    }
     render() {
         const { products, category, categoryId } = this.props;
         var productsList = "";
@@ -12,7 +14,7 @@ class ProductList extends Component {
             var count = 0;
             productsList = products.map((product, key) => {
                 if (count < 4) {
-                    if (product.category_id.toString() === categoryId) {
+                    if (product.category_id.toString() === categoryId.toString()) {
                         count++;
                         return (
                             <ProductItem
@@ -29,13 +31,16 @@ class ProductList extends Component {
         return (
             <div className="product-box w-100 my-3">
                 <div className="float-right pr-3">
-                    <Link to="/">Xem tất cả</Link>
+                    <Link 
+                    to={`/category/${category}`}
+                    onClick={() => this.onFilterCategory(categoryId)}
+                    >Xem tất cả</Link>
                 </div>
                 <div className="box-title text-uppercase">
                     Điện thoại <span className="green">{category}</span>
                 </div>
                 <div className="row px-3">
-                    <div className="col-md-4 col-lg-5 border-right px-0">
+                    {/* <div className="col-md-4 col-lg-5 border-right px-0">
                         <div className="big-product">
                             <Link to="/" className="product-img"><img src="img/item/iphonex.png" alt="" /></Link>
                             <div className="big-info">
@@ -48,7 +53,7 @@ class ProductList extends Component {
                                     <img className="special-icon" src="img/tragop.png" alt="" />
                                     <img className="special-icon" src="img/baohanh.png" alt="" />
                                 </div>
-                                {/* <i class="fas fa-gift"></i> */}
+                                <i class="fas fa-gift"></i>
                             </div>
                         </div>
                         <div className="product-info p-2">
@@ -65,8 +70,8 @@ class ProductList extends Component {
                                 <p className="product-price">14.990.000đ</p>
                             </Link>
                         </div>
-                    </div>
-                    <div className="col-lg-7 col-md-8">
+                    </div> */}
+                    <div className="col-lg-12 col-md-12">
                         <div className="row h-100">
                             {productsList}
                         </div>
@@ -91,7 +96,9 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = (dispatch, props) => {
     return {
-
+        onFilterCategory: (cate) => {
+            dispatch(actFilterCategory(cate));
+        },
     }
 }
 

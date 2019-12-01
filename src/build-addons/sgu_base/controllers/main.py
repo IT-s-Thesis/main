@@ -14,7 +14,10 @@ from odoo.exceptions import ValidationError, UserError
 from odoo.http import JsonRequest
 
 _logger = logging.getLogger(__name__)
-
+from odoo.http import content_disposition, dispatch_rpc, request, \
+    serialize_exception as _serialize_exception, Response
+from odoo.tools import crop_image, topological_sort, html_escape, pycompat
+from odoo.tools.safe_eval import safe_eval
 
 try:
     import dictfier
@@ -543,6 +546,7 @@ class SguBase(http.Controller):
                     'order_id': order.id
                 })
                 request.env['sgu.order.line'].sudo().create(item)
+            self._send_email_template_order(request, order)
             return {
                 "status": 'success', 
                 'code': order.name
@@ -598,19 +602,115 @@ class SguBase(http.Controller):
                 mimetype='application/json'
             )
     
-    def _send_email_template_order(self, customer):
-        su_id = self.env['res.partner'].browse(SUPERUSER_ID)
-        template_id = self.env['ir.model.data'].get_object_reference(
+
+    @http.route(
+        '/api/download-report/<code_order>/<token>', 
+        auth='public', methods=['POST', 'OPTIONS'], cors="*", type='http', csrf=False)
+    def api_download_report(self, data, code_order, token):
+        try:
+            order = request.env['sgu.order'].sudo().search([
+                ('name', '=', code_order),
+                ('token', '=', token)
+            ])
+            if len(order) == 1:
+                requestcontent = json.loads(data)
+                url, type = requestcontent[0], requestcontent[1]
+                try:
+                    if type in ['qweb-pdf', 'qweb-text']:
+                        converter = 'pdf' if type == 'qweb-pdf' else 'text'
+                        extension = 'pdf' if type == 'qweb-pdf' else 'txt'
+
+                        pattern = '/report/pdf/' if type == 'qweb-pdf' else '/report/text/'
+                        reportname = url.split(pattern)[1].split('?')[0]
+
+                        docids = None
+                        if '/' in reportname:
+                            reportname, docids = reportname.split('/')
+
+                        if docids:
+                            # Generic report:
+                            response = self.report_routes(reportname, docids=docids, converter=converter)
+                        else:
+                            # Particular report:
+                            data = url_decode(url.split('?')[1]).items()  # decoding the args represented in JSON
+                            response = self.report_routes(reportname, converter=converter, **dict(data))
+
+                        report = request.env['ir.actions.report'].sudo()._get_report_from_name(reportname)
+                        filename = "%s.%s" % (report.name, extension)
+
+                        if docids:
+                            ids = [int(x) for x in docids.split(",")]
+                            obj = request.env[report.model].sudo().browse(ids)
+                            if report.print_report_name and not len(obj) > 1:
+                                report_name = safe_eval(report.print_report_name, {'object': obj})
+                                filename = "%s.%s" % (report_name, extension)
+                        response.headers.add('Content-Disposition', content_disposition(filename))
+                        return response
+                    else:
+                        return
+                except Exception as e:
+                    se = _serialize_exception(e)
+                    error = {
+                        'code': 200,
+                        'message': "Odoo Server Error",
+                        'data': se
+                    }
+                    return request.make_response(html_escape(json.dumps(error)))
+        except Exception as ex:
+            return http.Response(
+                json.dumps({
+                    "status": 'error',
+                    "message": ex
+                }),
+                status=400,
+                mimetype='application/json'
+            )
+
+    def report_routes(self, reportname, docids=None, converter=None, **data):
+        report = request.env['ir.actions.report'].sudo()._get_report_from_name(reportname)
+        context = dict(request.env.context)
+
+        if docids:
+            docids = [int(i) for i in docids.split(',')]
+        if data.get('options'):
+            data.update(json.loads(data.pop('options')))
+        if data.get('context'):
+            # Ignore 'lang' here, because the context in data is the one from the webclient *but* if
+            # the user explicitely wants to change the lang, this mechanism overwrites it.
+            data['context'] = json.loads(data['context'])
+            if data['context'].get('lang'):
+                del data['context']['lang']
+            context.update(data['context'])
+        if converter == 'html':
+            html = report.with_context(context).render_qweb_html(docids, data=data)[0]
+            return request.make_response(html)
+        elif converter == 'pdf':
+            pdf = report.with_context(context).render_qweb_pdf(docids, data=data)[0]
+            pdfhttpheaders = [('Content-Type', 'application/pdf'), ('Content-Length', len(pdf))]
+            return request.make_response(pdf, headers=pdfhttpheaders)
+        elif converter == 'text':
+            text = report.with_context(context).render_qweb_text(docids, data=data)[0]
+            texthttpheaders = [('Content-Type', 'text/plain'), ('Content-Length', len(text))]
+            return request.make_response(text, headers=texthttpheaders)
+        else:
+            raise werkzeug.exceptions.HTTPException(description='Converter %s not implemented.' % converter)
+
+
+    def _send_email_template_order(self, request, order):
+        su_id = request.env['res.partner'].browse(SUPERUSER_ID)
+        template_id = request.env['ir.model.data'].get_object_reference(
                                 'sgu_base',
                                 'template_email_order')[1]
         if template_id:
-            self = self.with_context(today=date.today().strftime('%d-%m-%Y'))
-            email_template_obj = self.env['mail.template'].browse(template_id)
-            values = email_template_obj.generate_email(customer.id, fields=None)
-            values['email_from'] = su_id.email
-            values['email_to'] = customer.email
+            context = request.env.context.copy()
+            context.update({'today': date.today().strftime('%d-%m-%Y')})
+            request.env.context = context
+            email_template_obj = request.env['mail.template'].sudo().browse(template_id)
+            values = email_template_obj.generate_email(order.id, fields=None)
+            values['email_from'] = su_id.sudo().email
+            values['email_to'] = order.customer.email
             values['res_id'] = False
-            mail_mail_obj = self.env['mail.mail']
+            mail_mail_obj = request.env['mail.mail'].sudo()
             msg_id = mail_mail_obj.create(values)
             if msg_id:
                 msg_id.send()

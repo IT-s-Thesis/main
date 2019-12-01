@@ -2,15 +2,31 @@ import React, { Component } from "react";
 import CategoryProductItem from "./CategoryProductItem";
 import { connect } from 'react-redux';
 // import { Link } from 'react-router-dom';
-// import { actFetchProductsRequest, actFetchCategoriesRequest } from '../../actions/index';
+import { actFilterCategory } from '../../actions/index';
+
 class CategoryProductList extends Component {
+   
+    componentDidMount() {
+        window.scrollTo(0,0);
+        const { match } = this.props;
+        if (match) {
+            // const id = parseInt(match.params.id,10);
+            // this.props.onDetailsProduct(id);
+            const id = parseInt(match.params.id,10);
+            this.props.onFilterCategory(id);
+        }
+    }   
+
     render() {
-        const { products, filters } = this.props;
+        var { products, filters, price } = this.props;
         var productsList = "";
+        if(price) {
+            products = price;
+        }
         if (products) {
             if (filters && filters !== "All") {
                 productsList = products.map((product, index) => {
-                    return (product.category_id.toString() === filters) ? 
+                    return (product.category_id.toString() === filters.toString()) ? 
                             (<CategoryProductItem key={index} product={product} />) 
                             : "";
                 });
@@ -36,7 +52,8 @@ class CategoryProductList extends Component {
 const mapStateToProps = state => {
     return {
         products: state.products,
-        filters: state.filters
+        filters: state.filters,
+        price: state.price
     }
 }
 const mapDispatchToProps = (dispatch) => {
@@ -47,6 +64,9 @@ const mapDispatchToProps = (dispatch) => {
         // fetchAllCategories: () => {
         //     dispatch(actFetchCategoriesRequest());
         // }
+        onFilterCategory: (cate) => {
+            dispatch(actFilterCategory(cate));
+        },
     }
 }
 
