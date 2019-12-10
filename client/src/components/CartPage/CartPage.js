@@ -12,6 +12,7 @@ class CartPage extends Component {
             email: "",
             phone: "",
             gender: "male",
+            payment: "cod",
             address: "",
             msg: false
         };
@@ -34,9 +35,15 @@ class CartPage extends Component {
             [name]: value,
         });
     }
+    show1 = () => {
+        document.getElementById('transfer').style.display = 'none';
+    }
+    show2 = () => {
+        document.getElementById('transfer').style.display = 'block';
+    }
     onAddOrder = () => {
         let order_lines = [];
-        const { email, name, phone, address, gender } = this.state;
+        const { email, name, phone, address, gender, payment } = this.state;
         this.props.cart.map(function (item) {
             let arrItem = {
                 product_id: item.product.id,
@@ -52,7 +59,7 @@ class CartPage extends Component {
                 phone: phone,
                 contact_address: address,
                 gender: gender,
-                payment_method: "cod",
+                payment_method: payment,
                 order_lines: order_lines
             }
             let json = JSON.stringify(orderInfo);
@@ -77,7 +84,7 @@ class CartPage extends Component {
         window.location.href = "http://localhost:5001";
     }
     render() {
-        const { address, phone, name, email, msg, gender } = this.state;
+        const { address, phone, name, email, msg, payment, gender } = this.state;
         let check = "";
         if (msg) {
             check = <p className="red">Vui lòng nhập đầy đủ thông tin</p>;
@@ -114,7 +121,9 @@ class CartPage extends Component {
                     <div className="modal-dialog">
                         <div className="modal-content">
                             <div className="modal-body text-center">
-                                <h5>Đặt Hàng Thành Công</h5>
+                                <h5>Đặt Hàng Thành Công !</h5>
+                                <p>Thông tin đơn hàng đã được gửi vào E-mail.
+                                Chúng tôi sẽ liên lạc với bạn qua số điện thoại trong thời gian sớm nhất...</p>
                             </div>
                             <div className="modal-footer d-flex justify-content-center">
                                 <button type="button" className="btn btn-danger text-center" onClick={() => this.backHome()}>Quay về trang chủ</button>
@@ -168,6 +177,21 @@ class CartPage extends Component {
                                                         type="text" className="form-control" aria-describedby="emailHelpId" placeholder="Địa chỉ giao hàng" />
                                                 </div>
                                             </div>
+                                            <h5>Hình thức thanh toán:</h5>
+                                            <div className="customer-payment mb-2">
+                                                <input type="radio" checked={payment === "cod"} onClick={() => this.show1()}
+                                                    value="cod" onChange={this.handleChange} name="payment" /> Thanh toán khi nhận hàng
+                                                <input type="radio" checked={payment === "transfer"}
+                                                    onClick={() => this.show2()}
+                                                    value="transfer" onChange={this.handleChange} className="ml-4" name="payment" /> Chuyển khoản
+                                            </div>
+                                            <div id="transfer" className="collapse hide border-bottom pb-2">
+                                                <p className=" pb-3 my-3">Chuyển qua ngân hàng ACB cho chúng tôi theo thông tin: </p>
+                                                <p><span>Tên ngân hàng: </span><b> Ngân hàng ACB An Dương Vương Quận 5</b></p>
+                                                <p><span>Chủ tài khoản: </span><b> Nhóm SGU</b></p>
+                                                <p><span>Số tài khoản: </span><b> 0123456789</b></p>
+                                                <p><span>Nội dung: </span><b> Mua điện thoại - Tên khách hàng - Tên sản phẩm - Số điện thoại</b></p>
+                                            </div>
                                             {/* <div className="customer-address">
                                                 <p><b>Để được phục vụ nhanh hơn,</b> hãy chọn thêm:</p>
                                                 <form className="mt-1">
@@ -197,8 +221,8 @@ class CartPage extends Component {
                                     <div className="product-buy text-sm-center p-3">
                                         <button onClick={() => this.onAddOrder(this.props.cart)}
                                             type="button" className="btn btn-buy">
-                                            <p className="text-uppercase font-weight-bold">Thanh toán khi nhận hàng</p>
-                                            <p>Xem hàng trước, không mua không sao</p>
+                                            <p className="text-uppercase font-weight-bold">Đặt hàng</p>
+                                            <p>Đổi trả trong vòng 7 ngày</p>
                                         </button>
                                         {/* <button type="button" className="btn btn-installment">
                                             <p className="text-uppercase font-weight-bold">Thanh toán online</p>

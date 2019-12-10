@@ -10,5 +10,6 @@ ENV PATH /app/node_modules/.bin:$PATH
 COPY package.json /app/package.json
 RUN yarn install
 
+EXPOSE 5001
 # start app
 CMD ["yarn", "start"]

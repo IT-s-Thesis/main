@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { Link } from 'react-router-dom';
 import { actCheckOrderRequest } from '../../actions/index';
 import OrderItem from './OrderItem';
+import axios from 'axios';
+// import qs from 'qs';
 import { connect } from "react-redux";
 
 class OrderList extends Component {
@@ -46,6 +48,24 @@ class OrderList extends Component {
         }
 
     }
+    // export = () => {
+    //       axios({
+    //         method: 'post',
+    //         url: 'http://web.manager/api/download-report/ORD0001/qHKEY2',
+    //         data: 'data:["/report/pdf/sgu_base.report_sale_order/1","qweb-pdf"]',
+    //         headers: {
+    //           'content-type': 'application/x-www-form-urlencoded'
+    //         }
+    //       }).then((response) => {
+    //         // const url = window.URL.createObjectURL(new Blob([response.data]));
+    //         // const link = document.createElement('a');
+    //         // link.href = url;
+    //         // link.setAttribute('download', 'file.pdf');
+    //         // document.body.appendChild(link);
+    //         // link.click();
+    //         console.log(response);
+    //       });
+    // }
 
     render() {
 
@@ -168,6 +188,11 @@ class OrderList extends Component {
                                             {orderItem ? (<p className="text-center font-weight-bold">Danh sách sản phẩm: </p>) : ""}
                                             {orderItem ? (<div>{orderItem}</div>) : ""}
                                             {total ? total : ""}
+                                            {/* <div className="w-100 text-center ">
+                                            <button onClick={() => this.export()}
+                                             type="button" className="btn btn-success">
+                                                In hóa đơn</button>
+                                            </div> */}
                                         </div>
                                     </div>
 

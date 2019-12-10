@@ -19,7 +19,7 @@ class SearchPage extends Component {
                         <Link to="/">Phụ kiện (30)</Link>
                         <Link to="/">Tin tức (100)</Link>
                     </div> */}
-                    <p className="py-3">Tìm thấy <b>{search.count > 0 ? search.count : 0}</b> kết quả"</p>
+                    <p className="py-3">Tìm thấy <b>{search.count > 0 ? search.count : 0}</b> kết quả</p>
                 </div>
                 <div className="row my-3">
                     <div className="col-md-12 pl-0">

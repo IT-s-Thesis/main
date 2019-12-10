@@ -19,7 +19,9 @@ class SearchItem extends Component {
                             <i className="fas fa-star orange font-11"></i>
                             <span className="text-muted font-11"> (10 đánh giá)</span>
                         </p>
-                        <p className="product-price">300đ <span className="old-price text-muted">{price}</span></p>
+                        <p className="product-price">{price}đ
+                         {/* <span className="old-price text-muted">{price}</span> */}
+                         </p>
                     </div>
                 </Link>
             </div>

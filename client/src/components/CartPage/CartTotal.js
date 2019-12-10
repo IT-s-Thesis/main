@@ -23,7 +23,7 @@ class CartTotal extends Component {
                 <div className="number">
                     {/* <p className="red">{this.showTotalPrice(cart)}</p>
                     <small className="sale">-0đ</small> */}
-                    <p className="red">{this.showTotalPrice(cart)}</p>
+                    <p className="red">{this.showTotalPrice(cart)} đ</p>
                 </div>
             </div>
         );

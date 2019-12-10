@@ -19,7 +19,9 @@ class ProductItem extends Component {
                         <i className="fas fa-star orange font-11"></i>
                         <span className="text-muted font-11"> (10 đánh giá)</span>
                     </p>
-                    <p className="product-price">{price}đ <span className="old-price text-muted">20.000.000đ</span></p>
+                    <p className="product-price">{price}đ
+                     {/* <span className="old-price text-muted">20.000.000đ</span> */}
+                     </p>
                 </div>
                 </NavLink>
             </div>

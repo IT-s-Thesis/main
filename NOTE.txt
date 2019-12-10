@@ -8,3 +8,5 @@ New contatiner
 docker-compose run --rm --no-deps web odoo -d runtest1
 
 docker-compose run --rm --no-deps web odoo -d runtest3 -i sgu_base
+
+COMPOSE_HTTP_TIMEOUT=200 

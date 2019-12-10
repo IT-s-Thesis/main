@@ -9,7 +9,7 @@ networks:
 services:
   web:
     image: odoo:12.0
-    
+    restart: always
     depends_on:
       - db
     ports:
@@ -44,6 +44,7 @@ services:
   client:
     container_name: client
     build: ./client
+    restart: always
     volumes:
       - './client:/app'
       - '/app/node_modules'

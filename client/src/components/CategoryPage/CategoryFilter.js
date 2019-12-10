@@ -80,13 +80,13 @@ class CategoryFilter extends Component {
                         <p to="/" onClick={() => this.onFilterPrice('["*", ["price", ">","15000000"], ["price", "<", "100000000"]]')}>Trên 15 triệu</p>
                     </div>
                     <div className="filter">
-                        <select className="form-control">
+                        {/* <select className="form-control">
                             <option style={{ display: 'none' }} defaultValue>Sắp xếp theo</option>
                             <option>Mới nhất</option>
                             <option>Bán chạy</option>
                             <option>Giá cao đến thấp</option>
                             <option>Giá thấp đến cao</option>
-                        </select>
+                        </select> */}
                     </div>
 
                 </div>

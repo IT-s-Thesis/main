@@ -216,6 +216,9 @@ nav  {
     width: 70px;
     margin-left: 14px;
 }
+.hide {
+    display: none;
+}
 .product-img {
     height: 220px;
     transition: 0.7s;

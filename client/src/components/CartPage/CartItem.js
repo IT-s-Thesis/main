@@ -32,8 +32,8 @@ class CartItem extends Component {
                             <option>Đen</option>
                         </select>
                     </div> */}
-                    <p className="product-price">{price}</p>
-                    <p className="product-price">{price*qty}</p>
+                    {/* <p className="product-price">{price} VNĐ</p> */}
+                 <p><span className="product-name">Thành tiền: </span><span className="product-price">{price*qty} đ</span></p>
                 </div>
                 <div className="d-flex h-100 ml-md-4">
                     <span onClick= {() => this.onUpdateCartItem(this.props.product.product, qty - 1)}
