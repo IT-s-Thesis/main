@@ -21,7 +21,7 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=proxy"
-      - "traefik.odoo.frontend.rule=Host:web.localhost"
+      - "traefik.odoo.frontend.rule=Host:web.demo"
       - "traefik.odoo.port=8069"
       - "traefik.odoo.backend=odoo"
       - "traefik.odoo.weight=10"
@@ -56,7 +56,7 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=proxy"
-      - "traefik.client.frontend.rule=Host:client.localhost"
+      - "traefik.client.frontend.rule=Host:client.demo"
       - "traefik.client.port=5001"
       - "traefik.client.backend=client"
     networks:
@@ -71,7 +71,7 @@ services:
     labels:
       - "traefik.docker.network=proxy"
       - "traefik.enable=true"
-      - "traefik.frontend.rule=Host:traefik.localhost"
+      - "traefik.frontend.rule=Host:traefik.demo"
       - "traefik.port=8080"
     networks:
       - proxy
