@@ -4,7 +4,7 @@ class ProductItem extends Component {
 
     render() {
         const { id, name, image_url, price } = this.props.product;
-        const img = `http://web.manager${image_url}`;
+        const img = `http://web.localhost${image_url}`;
         return (
             <div className="col-md-3 col-6 product-item border-right border-top d-block">
                 <NavLink to={`/details-${id}`}>

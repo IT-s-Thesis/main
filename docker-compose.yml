@@ -52,6 +52,7 @@ services:
       - '5001:5001'
     environment:
       - NODE_ENV=development
+      - DANGEROUSLY_DISABLE_HOST_CHECK=true
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=proxy"

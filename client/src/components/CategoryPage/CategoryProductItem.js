@@ -8,7 +8,7 @@ class CategoryProductItem extends Component {
     }
     render() {
         const { id, name, price, cpu, ram, camera, osystem, pin, screen, image_url } = this.props.product;
-        const img = `http://web.manager${image_url}`;
+        const img = `http://web.localhost${image_url}`;
         return (
             <div className="five-item px-0">
                 <div className="product-item border-bottom border-right">

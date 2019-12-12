@@ -51,7 +51,7 @@ class OrderList extends Component {
     // export = () => {
     //       axios({
     //         method: 'post',
-    //         url: 'http://web.manager/api/download-report/ORD0001/qHKEY2',
+    //         url: 'http://web.localhost/api/download-report/ORD0001/qHKEY2',
     //         data: 'data:["/report/pdf/sgu_base.report_sale_order/1","qweb-pdf"]',
     //         headers: {
     //           'content-type': 'application/x-www-form-urlencoded'

@@ -23,7 +23,7 @@
                 Liên hệ nhân viên bán hàng: 0932 xxx xxx
 
                 <div style="margin: 16px 8px 16px 8px;">
-                    <a href="http://client.manager/order"
+                    <a href="http://client.localhost/order"
                         style="background-color: #875a7b; text-decoration: none; color: #fff; padding: 8px 16px 8px 16px; border-radius: 5px;">Thông tin đơn hàng</a>
                 </div>
             </div>

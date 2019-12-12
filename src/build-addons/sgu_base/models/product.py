@@ -68,12 +68,12 @@ class Product(models.Model):
 
     @api.model
     def create(self, vals):
-        tools.image_resize_images(vals, big_name='hinhanh', medium_name='image_medium', small_name='image_small')
+        tools.image_resize_images(vals, big_name='image', medium_name='image_medium', small_name='image_small')
         return super(Product, self).create(vals)
 
     @api.multi
     def write(self, vals):
-        tools.image_resize_images(vals, big_name='hinhanh')
+        tools.image_resize_images(vals, big_name='image')
         return super(Product, self).write(vals)
 
 

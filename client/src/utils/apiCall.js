@@ -22,7 +22,7 @@ export function callApi(endpoint, method = 'GET', body){
 //         //     "Host": "web.localhost",
 //         //   }, 
 //         method: "POST",
-//         url: `http://web.manager/api/order/checkout`,
+//         url: `http://web.localhost/api/order/checkout`,
 //         data:  {
 //             email: "hien@gmail.com",
 //             name: "test",

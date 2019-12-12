@@ -23,7 +23,7 @@ class TopDetails extends Component {
     render() {
         
         const { name, image_url, price, on_hand } = this.props.details;
-        const img = `http://web.manager${image_url}`;
+        const img = `http://web.localhost${image_url}`;
         return (
             <div className="container details-product">
                 <div className="modal" id="hethang">

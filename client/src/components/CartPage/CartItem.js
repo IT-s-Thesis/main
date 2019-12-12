@@ -17,7 +17,7 @@ class CartItem extends Component {
         
         const { name, image_url, price } = this.props.product.product;
         const { qty } = this.props.product;
-        const img = `http://web.manager${image_url}`;
+        const img = `http://web.localhost${image_url}`;
         return (
             <div className="cart-item border-bottom">
                 <img src={img} className="border" alt="" />

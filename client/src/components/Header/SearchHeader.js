@@ -17,7 +17,7 @@ class SearchHeader extends Component {
         });
     }
     onSearch = (search) => {
-        axios.get(`http://web.manager/api/notauth/sgu.product?filter=[["name","ilike","${search }"]]`)
+        axios.get(`http://web.localhost/api/notauth/sgu.product?filter=[["name","ilike","${search }"]]`)
             .then((response) => {
                 this.props.onSearch(response);
             })

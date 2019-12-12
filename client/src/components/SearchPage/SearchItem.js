@@ -4,7 +4,7 @@ class SearchItem extends Component {
 
     render() {
         const { name, price, image_url, id } = this.props.product;
-        const img = `http://web.manager${image_url}`;
+        const img = `http://web.localhost${image_url}`;
         return (
             <div className=" product-item ">
                 <Link to={`/details-${id}`}>

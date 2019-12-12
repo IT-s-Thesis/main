@@ -20,7 +20,7 @@ class CategoryFilter extends Component {
         this.props.onFilterCategory(cate);
     }
     onFilterPrice = (price) => {
-        axios.get(`http://web.manager/api/notauth/sgu.product?filter=${price}`)
+        axios.get(`http://web.localhost/api/notauth/sgu.product?filter=${price}`)
             .then((response) => {
                 this.props.onFilterPrices(response.data.result);
             })
