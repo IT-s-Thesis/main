@@ -60,8 +60,8 @@
                                 <field name="phone" required="1" attrs="{'readonly': [('lock', '=', True)]}"/>
                             </group>
                             <group>
-                                <field name="saleperson" groups="sgu_base.group_manager" attrs="{'readonly': [('lock', '=', True)]}"/>
-                                <field name="saleperson" groups="sgu_base.group_shipper" readonly="1"/>
+                                <field name="saleperson" groups="sgu_base.group_manager"/>
+                                <field name="saleperson" groups="sgu_base.group_shipper"/>
                                 <field name="payment_method" attrs="{'readonly': [('lock', '=', True)]}"/>
                                 <field name="lock" invisible="1" />
                             </group>
